@@ -1,0 +1,25 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+        
+      <div id="dailybutton">
+          
+          <a href="{{ url_for('news') }}"><button id="b1" type="button" class="btn btn-primary btn-lg">News</button></a>
+          <a href="{{ url_for('tips') }}"><button id="b2" type="button" class="btn btn-secondary btn-lg" >Tips</button></a>
+          
+      </div>
+      <div id="dailybutton">
+          
+        <a href="{{ url_for('simulation_note') }}"><button id="b3" type="button" class="btn btn-primary btn-lg" >Simulation Notification</button></a>
+        <a href="{{ url_for('check_user') }}"><button id="b4" type="button" class="btn btn-secondary btn-lg">WithDrawal</button></a>
+        
+    </div>
+{% endblock content%}

@@ -1,0 +1,56 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div style="height:20px"></div>
+    <div class="content-section">
+        <h2> Terms</h2>
+        <p>By accessing the Service and Data at this website, you are agreeing to be bound by these terms, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this platform. The contents in this platform are protected by applicable copyright and trademark law. </p>
+        <h2>Use license</h2>
+        <p> Users can use this platform for:<br>
+            1.	Sharing experience that related to social engineering.<br>
+            2.  "Like" or "Not Interested" other user's posts.<br>
+            3.	Reporting a social engineering attack (phishing email attack).<br>
+            4.	Earn points and get badges by using the functions on the platform.<br>
+            5.	Get rewards according to the gamification rules.<br>
+            6.	Check other people’s points and rank on the leaderboard.<br> 
+            7.  Contact us if the user has any problem.<br>
+            8.  Check Terms and Policy.<br>
+            9.  Check Instruction.<br>
+            10. Give feedback to the developer.<br> 
+        </p>
+        <h2>Data License </h2>
+        <p>Users only can use the information that the platform provides to you, or the experience shared by the other users. </p>
+
+        <h2>Conditions</h2>
+        <h3>Privacy Policy</h3>
+        <p>All the data will be stored in a secure database, and only the principal investigator and co-investigator have access to the data. When the evaluation was finished, all the data will be destroyed immediately. The data will hold for two months.  </p>
+        <h2>Withdrawal</h2>
+        <p>Users can withdraw from the evaluation before the time limitation:<br> 
+            anytime. <br>
+            There are two ways to withdraw.<br> 
+            1. Click the withdrawal link provided in the daily news.<br> 
+            2. Contact the principal investigator or co-investigator.<br> 
+        </p>
+        <h2>Types of Data collected</h2>
+        <p>Users’ names, email addresses, and interests.<br> 
+            The information that collects by the questionnaire when the user registers the platform.</p>
+        <h2>Place </h2>
+        <p>Online</p>
+        <h2>Time</h2>
+        <p>Three weeks per phase</p>
+
+        <h2>The Use of the Collected Data</h2>
+        <p>All the information is used for social engineering awareness training. Personal information will not show in the evaluation result, thesis work, or presentation. Only the statistical result that related to participation will show in the evaluation result. For example, the result will show how many people register for the platform. </p>
+    </div>
+    <br>
+    <br>
+
+{% endblock content %}

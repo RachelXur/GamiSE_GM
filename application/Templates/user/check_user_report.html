@@ -1,0 +1,74 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% if current_user.position == 'IT' %}
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <!-- IT report section, too see what IT report these days-->
+        
+            <section class="main-content920">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div id="main" style="width: 200%; margin: 10px auto;" >
+                                <input id="tab1" type="radio"  name="tab" checked>
+                                <label for="tab1"> User reports</label>
+                                
+                                <!--show all the reports -->
+                                    {% for report in reports %}
+                                        {% if report.read == False %}
+                                            <section id="content1" >
+                                                <div class="question-type2033" >
+                                                    <div class="row">
+                                                        <div class="col-md-1">
+                                                            <div class="left-user12923 left-user12923-repeat">
+                                                                <!-- yo need to retrieve the user images here from the database-->
+                                                                <img src="{{url_for('static', filename='images/' + report.user.image_file)}}" alt="image"> 
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-9">
+                                                            <div class="right-description893">
+                                                                <a class="mr-2" href="#">{{ report.user.username }}</a>
+                                                                <small class="text-muted">{{report.report_date.strftime('%Y-%m-%d')}}</small>
+                                                                <div id="que-hedder2983">
+                                                                    <a href="{{url_for('check_report', pid=report.report_id)}}"><h3><strong>{{ report.subject }}</strong></h3></a>
+                                                                </div>
+                                                                <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                    <h4></h4><strong>Sender Email:</strong></h4>
+                                                                    <p>{{ report.senderemail }}</p>
+                                                                </div>
+                                                                <div class="detailstext">
+                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                        <h4></h4><strong>Phishing Elements:</strong></h4>
+                                                                        <p>{{ report.reason }}</p>
+                                                                    </div>
+                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                        <h4></h4><strong>Risk Action:</strong></h4>
+                                                                        <p>{{ report.riskaction }}</p>
+                                                                    </div>
+                                                                    <div class="ques-details10018" style="font-size:18px">
+                                                                        <h4></h4><strong>Report Status:</strong></h4>
+                                                                        <p>{{ report.reportstatus }}</p>
+                                                                    </div>
+                                                                </div>
+                                                                <hr>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+                                        {% endif %}
+                                    {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+    {% endif %}
+{% endblock content%}

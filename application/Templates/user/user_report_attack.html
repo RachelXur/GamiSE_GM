@@ -1,0 +1,118 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="welcome-part-one" style="padding-bottom: 0px;">
+        <div class="container" style="color: white;"> <h3> Submit Report</h3>
+        <ol class="breadcrumb breadcrumb839" style="background-color: transparent">
+            <li class="active" style="color: white;">Normal Users</li>
+        </ol>
+        </div>
+
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        <h4> Submit a Report </h4>
+                        <hr>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <!-- ask the user for the subject-->
+                            <div class="username-part940">
+                                <span class="form-description43" style="font-size: 18px;"> Email Subject: </span><br>
+                                {% if form.subject.errors %}
+                                    {{ form.subject(class="is-invalid", type="text", style="width:70%", placeholder="Enter the email subject") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.subject.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.subject(type="text", style="width:70%", placeholder="Enter the email subject") }}
+                                {% endif %}
+                            </div>
+                            <!-- ask the user for the sender email-->
+                            <div class="username-part940">
+                                <span class="form-description43" style="font-size: 18px;"> Sender Email: </span><br>
+                                {% if form.senderemail.errors %}
+                                    {{ form.senderemail(class="is-invalid", type="text", style="width:70%", placeholder="Enter the Sender Email") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.senderemail.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.senderemail(type="text", style="width:70%", placeholder="Enter the Sender Email") }}
+                                {% endif %}
+                            </div>
+                            <!-- ask the user for the the reason of attack-->
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Why do you think it is an attack?</span><br>
+                                {% if form.reason.errors %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", type="text") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.reason.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", placeholder="Enter your reason") }}
+                                {% endif %}
+                            </div>
+                            <!-- ask the user for the operations-->
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Have you had any risky operations recently?</span><br>
+                                {% if form.riskaction.errors %}
+                                    {{ form.riskaction(class="form-control", id="description", cols="15", rows="10", type="text") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.riskaction.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.riskaction(class="form-control", id="description", cols="15", rows="10", placeholder="Enter the operations if you have") }}
+                                {% endif %}
+                            </div>
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Did you forward this email to the IT department?</span><br>
+                                {% if form.reportstatus.errors %}
+                                    <div class="has error" style="color: red;">
+                                    {% print('please choose an option') %}
+                                    <br>
+                                    {% for subfield in form.reportstatus %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                </div>
+                                {% else %}
+                                    {% for subfield in form.reportstatus %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <br>
+                            <div class="text-center">
+                                {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                                <a href="{{ url_for('rattack') }}" ><button type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<br>
+
+{% endblock content%}

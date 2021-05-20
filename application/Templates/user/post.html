@@ -1,0 +1,91 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- content section, too see what everyone has shared-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main" style="width: 200%; margin: 10px auto;" >
+                        <section id="content" >
+                            <div class="question-type2033" >
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            <!-- yo need to retrieve the user images here from the database-->
+                                            <img src="{{url_for('static', filename='images/' + post.user.image_file)}}" alt="image"> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <a class="mr-2" href="#">{{ post.user.username }}</a>
+                                            <small class="text-muted">{{post.post_date.strftime('%Y-%m-%d')}}</small>
+                                            {% if current_user.id == post.user_id %}
+                                                <a href="{{ url_for('update_post', pid=post.post_id) }}" class="btn btn-primary btn-sm">Update</a>
+                                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#confirmDelet">
+                                                    Delete
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="confirmDelet" tabindex="-1" role="dialog" aria-labelledby="confirmDeletLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="confirmDeletLabel">Are you sure?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <!-- need a form with submit -->
+                                                            <form action="{{ url_for('delete_post', pid=post.post_id) }}" method="POST">
+                                                                <input class="btn btn-danger" type="submit" value="Delete">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            <div id="que-hedder2983">
+                                                <h3>{{ post.post_title }}</h3> 
+                                            </div>
+                                            <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                <p class="font-weight-normal" >{{ post.content }}</p>
+                                            </div>
+                                            <hr>
+                                            <!-- add like and  interested button here-->
+                                            <div class="text-center">
+                                                {% if current_user.liked_post(post.post_id) %}
+                                                    <div>Like: {{ likecount }}</div>
+                                                    <div class="button like-b" onclick="like('{{ post.post_id }}', 1)" style="opacity: 0.5;" ><i class="far fa-thumbs-up"></i></div>
+                                                    <div class="button unlike-b" onclick="unlike('{{ post.post_id }}', 0)"><i class="far fa-thumbs-down"></i></div>
+                                                {% elif current_user.disliked_post( post.post_id ) %}
+                                                    <div>Like: {{ likecount }}</div>
+                                                    <div class="button like-b" onclick="like('{{ post.post_id }}', 0)"><i class="far fa-thumbs-up"></i></div>
+                                                    <div class="button unlike-b" onclick="unlike('{{ post.post_id }}', 1)" style="opacity: 0.5;"><i class="far fa-thumbs-down"></i></div>
+                                                {% else %}
+                                                    <div>Like: {{ likecount }}</div>
+                                                    <button class="button like-b" onclick="like('{{ post.post_id }}', 0)" type="button"><i class="far fa-thumbs-up"></i></button>
+                                                    <button class="button unlike-b" onclick="unlike('{{ post.post_id }}', 0)" type="button"><i class="far fa-thumbs-down"></i></button>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content%}

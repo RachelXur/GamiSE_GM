@@ -1,0 +1,130 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        <h4> Questionnaire for Withdrawal </h4>
+                        <hr>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <table id="questionairre">
+                                <div>
+                                    <!-- Question 1-->
+                                    <p class="qa"> 1. How long did it take you to participate in the social engineering training every day?</p>
+                                    {% if form.qa.errors %}
+                                        <div class="form-control-feedback">
+                                            {% print('please choose an option') %}
+                                            <br>
+                                            {% for subfield in form.qa %}
+                                                {{subfield}} 
+                                                {{subfield.label(class="input", type="radio")}}<br>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {% for subfield in form.qa %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br>
+                                    <hr>
+                                    <!-- Question 2-->
+                                    <p class="qb"> 2. DO you think this website can help you to enhance your awareness of defending social engineering attacks?</p>
+                                    {% if form.qb.errors %}
+                                        <div class="form-control-feedback">
+                                            {% print('please choose an option') %}
+                                            <br>
+                                            {% for subfield in form.qb %}
+                                                {{subfield}} 
+                                                {{subfield.label(class="input", type="radio")}}<br>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {% for subfield in form.qb %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br>
+                                    <hr>
+                                    <!-- Question 3-->
+                                    <p class="qc"> 3. If you have a chance to have this training again, would you like to participate?</p>
+                                    {% if form.qc.errors %}
+                                        <div class="form-control-feedback">
+                                            {% print('please choose an option') %}
+                                            <br>
+                                            {% for subfield in form.qc %}
+                                                {{subfield}} 
+                                                {{subfield.label(class="input", type="radio")}}<br>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {% for subfield in form.qc %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br>
+                                    <hr>
+                                    <!-- Question 3-->
+                                    <p class="qd"> 3. Do you still want to withdrawal this training?</p>
+                                    {% if form.qd.errors %}
+                                        <div class="form-control-feedback">
+                                            {% print('please choose an option') %}
+                                            <br>
+                                            {% for subfield in form.qd %}
+                                                {{subfield}} 
+                                                {{subfield.label(class="input", type="radio")}}<br>
+                                            {% endfor %}
+                                        </div>
+                                    {% else %}
+                                        {% for subfield in form.qd %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    {% endif %}
+                                    <br>
+                                    <hr>
+                                </div>
+                            </table>
+                            <!-- IT department analyze the reason-->
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Could you tell us why you want to withdrawal?</span><br>
+                                {% if form.reason.errors %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", type="text") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.reason.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", placeholder="Enter your reason") }}
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <br>
+                            <div class="text-center">
+                                <a href="{{ url_for('homepage') }}" ><button id="b2" type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+                                {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+
+    {% endblock content %}

@@ -1,0 +1,84 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- content section, too see what everyone has shared-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main" style="width: 200%; margin: 10px auto;" >
+                        <section id="content" >
+                            <div class="question-type2033" >
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="left-user12923 left-user12923-repeat">
+                                            <!-- yo need to retrieve the user images here from the database-->
+                                            <img src="{{url_for('static', filename='images/' + itreport.user.image_file)}}" alt="image"> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="right-description893">
+                                            <a class="mr-2" href="#">{{ itreport.user.username }}</a>
+                                            <small class="text-muted">{{itreport.report_date.strftime('%Y-%m-%d')}}</small>
+                                            {% if current_user.id == itreport.user_id %}
+                                                <a href="{{ url_for('itreportchange_update', pid=itreport.report_id) }}" class="btn btn-primary btn-sm">Update</a>
+                                                <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#confirmDelet">
+                                                    Delete
+                                                </button>
+                                                <!-- Modal -->
+                                                <div class="modal fade" id="confirmDelet" tabindex="-1" role="dialog" aria-labelledby="confirmDeletLabel" aria-hidden="true">
+                                                    <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                        <h5 class="modal-title" id="confirmDeletLabel">Are you sure?</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <!-- need a form with submit -->
+                                                            <form action="{{ url_for('itreportchange_delete', pid=itreport.report_id) }}" method="POST">
+                                                                <input class="btn btn-danger" type="submit" value="Delete">
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                            <div id="que-hedder2983">
+                                                <h3><strong>{{ itreport.subject }}</strong></h3>
+                                            </div>
+                                            <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                <h4><strong>Sender Email:</strong></h4>
+                                                <p class="font-weight-normal">{{ itreport.senderemail }}</p>
+                                            </div>
+                                            <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                <h4><strong>Phishing Elements:</strong></h4>
+                                                <p class="font-weight-normal">{{ itreport.reason }}</p>
+                                            </div>
+                                            <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                <h4><strong>solution:</strong></h4>
+                                                <p class="font-weight-normal">{{ itreport.solution }}</p>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content%}

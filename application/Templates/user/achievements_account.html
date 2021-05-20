@@ -1,0 +1,41 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="modal-wrap">
+      <table class="table table-hover">
+          <thead class="thead-dark">
+              <tr>
+                  <th class="text-left" colspan="4">Achievements Record</th>
+              </tr>
+              <tr class="text-left">
+                <th>Time</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Points</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for achivementrecord in achievementsrecord %}
+              <tr class="text-left" style="color: white;font-size:18px">
+                <td> {{ achivementrecord[0].strftime('%Y-%m-%d') }} </td>
+                <td> {{ achivementrecord[1] }} </td>
+                <td> {{ achivementrecord[2] }} </td>
+                <td> {{ achivementrecord[3] }} </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+
+{% endblock content %}

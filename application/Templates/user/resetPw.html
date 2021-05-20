@@ -1,0 +1,105 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div style="height:20px"></div>
+
+    <div class="content-section">
+        {% if current_user.is_authenticated %}                         
+            <form action="" method="post">
+                {{ formLogged.hidden_tag() }}
+                
+                <div class="form-group">
+                    {{ formLogged.old_password.label(class="form-control-label") }}
+                    {% if formLogged.old_password.errors %}
+                        {{ formLogged.old_password(class="is-invalid", type="text", style="width:70%") }}
+                        <div class="invalid-feedback">
+                            {% for error in formLogged.old_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ formLogged.old_password(class="is-invalid", type="text", style="width:70%") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ formLogged.new_password.label(class="form-control-label") }}
+                    {% if formLogged.new_password.errors %}
+                        {{ formLogged.new_password(class="is-invalid", type="text", style="width:70%") }}
+                        <div class="invalid-feedback">
+                            {% for error in formLogged.new_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ formLogged.new_password(class="is-invalid", type="text", style="width:70%") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ formLogged.confirm_password.label(class="form-control-label") }}
+                    {% if formLogged.confirm_password.errors %}
+                        {{ formLogged.confirm_password(class="is-invalid", type="text", style="width:70%") }}
+                        <div class="invalid-feedback">
+                            {% for error in formLogged.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ formLogged.confirm_password(class="is-invalid", type="text", style="width:70%") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ formLogged.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        {% else %}
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.confirm_password.label(class="form-control-label") }}
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </form>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+{% endblock content %}

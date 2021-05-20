@@ -1,0 +1,141 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+          
+        <div class="modal-wrap">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="3">Points</th>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Describe</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pointrule in pointrules %}
+                        <tr class="text-left" style="color: white;font-size:18px">
+                            <td>{{ pointrule.point_id }}</td>
+                            <td>
+                                <div style="color:white;">
+                                    {{ pointrule.description }}
+                                </div>
+                            </td>
+                            <td>{{ pointrule.add_points }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Achievements</th>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for achievementrule in achievementrules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ achievementrule.achievement_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                {{ achievementrule.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                {{ achievementrule.description }}
+                            </div>
+                        </td>
+                        <td>{{ achievementrule.add_points }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Badges</th>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for badgerule in badgerules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ badgerule.badge_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                {{ badgerule.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                {{ badgerule.description }}
+                            </div>
+                        </td>
+                        <div class="left-user12923 img">
+                            <td><img src="{{url_for('static', filename='gamification_badges/' + badgerule.image_file)}}" alt="image" style="border-radius:50%; height:80px; width:80px;"></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Reward</th>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rewardrule in rewardrules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ rewardrule.reward_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                {{ rewardrule.name }}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                {{ rewardrule.description }}
+                            </div>
+                        </td>
+                        <div class="left-user12923 img">
+                            <td><img src="{{url_for('static', filename='gamification_reward/' + rewardrule.image_file)}}" alt="image" style="border-radius:50%; height:80px; width:80px;"></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock content%}

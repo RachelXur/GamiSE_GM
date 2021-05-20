@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    
+    <title>GamiSE</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">\
+    <link rel="stylesheet" href="/static/css/registerstyle.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    
+</head>
+
+<body>
+    <div class="modal-wrap">
+        <div class="modal-bodies">
+            <div class ="modal-body modal-body-step-1 is-showing">
+                <div class="title"> GamiSE</div>
+                <div class="description">Hello there, please register for GamiSE</div>
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <!-- Username -->
+                    {% if form.username.errors %}
+                        {{ form.username(type="text") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.username.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(type="text", placeholder="Name") }}
+                    {% endif %}
+                    <br>
+                    <!-- email address -->
+                    {% if form.email.errors %}
+                        {{ form.email(type="text") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.email.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                    {{ form.email(type="text", placeholder="Email Address") }}
+                    {% endif %}
+                    <br>
+                    <!-- password -->
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.password.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg", placeholder="Password") }}
+                    {% endif %}
+                    <br>
+                    <!-- Confirm Password -->
+                    {% if form.confirm_password.errors %}
+                        {{ form.confirm_password(class="form-control form-control-lg") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.confirm_password.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.confirm_password(class="form-control form-control-lg", placeholder="Confirm Password") }}
+                    {% endif %}
+                    <br>
+                    <!-- Position -->
+                    <p class="position"> Are you in IT department?</p>
+                    {% for subfield in form.position %}
+                        {{subfield}} 
+                        {{subfield.label(class="input", type="radio")}}<br>
+                    {% endfor %}
+                    <br>
+                    <hr>
+                    <!-- Position code -->
+                    <p class="position"> If you are in IT department, please enter your code.<strong>(If you are not in IT department, left "0" here.)</strong></p>
+                    <br>
+                        {% if form.itusercode.errors %}
+                            {{ form.itusercode(type="text") }}
+                            <div class="form-control-feedback">
+                            {% for error in form.itusercode.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.itusercode(type="text", placeholder="Code") }}
+                        {% endif %}
+                    <br>
+                    <hr>
+                    <!-- add Interests with options here-->
+                    <div>
+                        <label for="interest-select" class="reallabel"> Choose an Interest</label>
+                        Select your Interest:
+                            {{ form.interest (placeholder="Select") }}
+                    </div>
+                    <br>
+                    <!-- add the questionairre blocks here-->
+                    <!-- The options are disappearing, check the problems-->
+                    <div>
+                        <label class="reallabel"> questionnaire </label>
+                        <table id="questionairre">
+                            <div>
+                                <!-- Question 1-->
+                                <p class="qa"> 1. Have you ever been attacked by any phishing attacks?</p>
+                                {% if form.qa.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option') %}
+                                        <br>
+                                        {% for subfield in form.qa %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qa %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 2-->
+                                <p class="qb"> 2. What kind of social media platform would you like to use?</p>
+                                {% if form.qb.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option') %}
+                                        <br>
+                                        {% for subfield in form.qb %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qb %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 3-->
+                                <p class="qc"> 3. If you need to open a new bank account, which bank would you like to use?</p>
+                                {% if form.qc.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option') %}
+                                        <br>
+                                        {% for subfield in form.qc %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qc %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 4-->
+                                <p class="qd"> 4. If you are shopping online, which kind of payment would you like?</p>
+                                {% if form.qd.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option') %}
+                                        <br>
+                                        {% for subfield in form.qd %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qd %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 5-->
+                                <p class="qe"> 5. Do you have the habit of reading the news?</p>
+                                {% if form.qe.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option') %}
+                                        <br>
+                                        {% for subfield in form.qe %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qe %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 6-->
+                                <p class="qf"> 6. Do you like to use LinkedIn</p>
+                                {% if form.qf.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qf %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qf %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 7-->
+                                <p class="qg"> 7. What is your current status?</p>
+                                {% if form.qg.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qg %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qg %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 8-->
+                                <p class="qh"> 8. Do you change your password frequently?</p>
+                                {% if form.qh.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qh %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qh %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 9-->
+                                <p class="qi">9. Do you like to save your password on the browser</p>
+                                {% if form.qi.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qi %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qi %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 10-->
+                                <p class="qj">10. Did you ever have any social engineering training?</p>
+                                {% if form.qj.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qj %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qj %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                                <!-- Question 11-->
+                                <p class="qk">11. Do you often check emails?</p>
+                                {% if form.qk.errors %}
+                                    <div class="form-control-feedback">
+                                        {% print('please choose an option')%}
+                                        <br>
+                                        {% for subfield in form.qk %}
+                                            {{subfield}} 
+                                            {{subfield.label(class="input", type="radio")}}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {% for subfield in form.qk %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                {% endif %}
+                                <br>
+                                <hr>
+                            </div>
+                        </table>
+                    </div>
+                    <div class="Description">
+                        <p> By creating an account you agree to our  <a  href="#popup1">Terms and Conditions</a>.</p>
+                        <!-- Trigger/Open The Modal -->
+                        <div id="popup1" class="overlay">
+                            <div class="popup">
+                                <h1>GamiSE Terms and Conditions</h1>
+                                <a class="close" href="#">&times;</a>
+                                <div class="content">
+                                    <h2> Terms</h2>
+                                    <p>By accessing the Service and Data at this website, you are agreeing to be bound by these terms, all applicable laws and regulations, and agree that you are responsible for compliance with any applicable local laws. If you do not agree with any of these terms, you are prohibited from using or accessing this platform. The contents in this platform are protected by applicable copyright and trademark law. </p>
+                                    <h2>Use license</h2>
+                                    <p> Users can use this platform for:<br>
+                                        1.	Sharing experience that related to social engineering.<br>
+                                        2.  "Like" or "Not Interested" other user's posts.<br>
+                                        3.	Reporting a social engineering attack (phishing email attack).<br>
+                                        4.	Earn points and get badges by using the functions on the platform.<br>
+                                        5.	Get rewards according to the gamification rules.<br>
+                                        6.	Check other people’s points and rank on the leaderboard.<br> 
+                                        7.  Contact us if the user has any problem.<br>
+                                        8.  Check Terms and Policy.<br>
+                                        9.  Check Instruction.<br>
+                                        10. Give feedback to the developer.<br> 
+                                    </p>
+                                    <h2>Data License </h2>
+                                    <p>Users only can use the information that the platform provides to you, or the experience shared by the other users. </p>
+
+                                    <h2>Conditions</h2>
+                                    <h3>Privacy Policy</h3>
+                                    <p>All the data will be stored in a secure database, and only the principal investigator and co-investigator have access to the data. When the evaluation was finished, all the data will be destroyed immediately. The data will hold for two months.  </p>
+                                    <h2>Withdrawal</h2>
+                                    <p>Users can withdraw from the evaluation before the time limitation:<br> 
+                                        anytime. <br>
+                                        There are two ways to withdraw.<br> 
+                                        1. Click the withdrawal link provided in the daily news.<br> 
+                                        2. Contact the principal investigator or co-investigator.<br> 
+                                    </p>
+                                    <h2>Types of Data collected</h2>
+                                    <p>Users’ names, email addresses, and interests.<br> 
+                                        The information that collects by the questionnaire when the user registers the platform.</p>
+                                    <h2>Place </h2>
+                                    <p>Online</p>
+                                    <h2>Time</h2>
+                                    <p>Three weeks per phase</p>
+
+                                    <h2>The Use of the Collected Data</h2>
+                                    <p>All the information is used for social engineering awareness training. Personal information will not show in the evaluation result, thesis work, or presentation. Only the statistical result that related to participation will show in the evaluation result. For example, the result will show how many people register for the platform. </p>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wrapper">
+                            <label class="reallabel" for="yes_no_radio">Do you agree to the terms?</label>
+                            {% if form.terms.errors %}
+                                <div class="form-control-feedback">
+                                    {% print('please choose YES')%}
+                                    <br>
+                                    {% for subfield in form.terms %}
+                                        {{subfield}} 
+                                        {{subfield.label(class="input", type="radio")}}<br>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {% for subfield in form.terms %}
+                                    {{subfield}} 
+                                    {{subfield.label(class="input", type="radio")}}<br>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        {{ form.submit(class="button", type="submit") }}
+                    </div>
+                </form>
+                <div class="description">
+                    <small class="description" >
+                        <br>
+                        Already Have An Account? 
+                        <a class="ml-2" href="{{ url_for('login') }}">Log In </a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <!-- script for pop-up terms and conditiona-->
+    
+</body>
+</html>
+
+
+

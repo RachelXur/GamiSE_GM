@@ -1,0 +1,43 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+        
+        <div class="modal-wrap">
+            <form method="POST" enctype="multipart/form-data" style="padding:0 0 0 0">
+            {{ form.hidden_tag() }}
+                <div class="btons">
+                    {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                </div>
+        </div>        
+        <div class="modal-wrap">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Leaderboard</th>
+                    </tr>
+                    <tr class="text-left">
+                        <th>NAME</th>
+                        <th>POINT</th>
+                        <th>RANK</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for leaderboard in pointlist %}
+                        <tr style="color: white;">
+                            <td>{{ leaderboard[1] }}</td>
+                            <td>{{ leaderboard[2] }}</td>
+                            <td>{{ leaderboard[0] }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock content %}

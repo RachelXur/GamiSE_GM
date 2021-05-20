@@ -1,0 +1,144 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <!-- Welcome Section-->
+    <section class="welcome-part-one">
+        <div class="container">
+            <div class="welcome-demop102 text-center" style="margin-right: 110px;">
+                <h2> Welcome to GamiSE, share your experiences in social engineering</h2>
+                <h4 style="color: white;"> Please feel free to share your experience related to social engineering attacks </h4>  
+            </div>
+            <!-- Share experiences form-->
+            <div class="form-style8292" style="margin-right: 110px; margin-top: 70px;">
+                <div class="input-group" style="height: 50px;">
+                    <span class="input-group-addon" style="padding:15px 12px; height:50px">
+                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                    </span>
+                    <input type="text" class="form-control form-control8392" style="height: 50px; font-size:18px" placeholder="Want to share something?">
+                    <span class="input-group-addon" style="padding:15px 12px; height:50px">
+                        <!-- Here redirect to the Share experience modal form. -->
+                        <a href="{{ url_for('pexperience') }}">Share</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- IT report section, too see what IT report these days-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main" style="width: 200%; margin: 10px auto;" >
+                        <input id="tab1" type="radio"  name="tab" checked>
+                        <label for="tab1"> IT reports</label>
+                        <!--show all the reports -->
+                        {% for report in reports %}
+                            <section id="content1" >
+                                <div class="question-type2033" >
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="left-user12923 left-user12923-repeat">
+                                                <!-- yo need to retrieve the user images here from the database-->
+                                                <img src="{{url_for('static', filename='images/' + report.user.image_file)}}" alt="image"> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="right-description893">
+                                                <a class="mr-2" href="#">{{ report.user.username }}</a>
+                                                <small class="text-muted">{{report.report_date.strftime('%Y-%m-%d')}}</small>
+                                                <div id="que-hedder2983">
+                                                    <a href="{{url_for('itreportchange', pid=report.report_id)}}"><h3><strong>{{ report.subject }}</strong></h3></a>
+                                                </div>
+                                                <div style="font-size:18px; white-space: pre-wrap;">
+                                                    <h4><strong>Sender Email:</strong></h4>
+                                                    <p>{{ report.senderemail }}</p>
+                                                </div>
+                                                <div class="detailstext">
+                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                        <h4><strong>Phishing Elements:</strong></h4>
+                                                        <p>{{ report.reason }}</p>
+                                                    </div>
+                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                        <h4><strong>solution:</strong></h4>
+                                                        <p>{{ report.solution }}</p>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- content section, too see what everyone has shared-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div id="main" style="width: 200%; margin: 10px auto;" >
+                        <input id="tab2" type="radio"  name="tabs" checked>
+                        <label for="tab2"> Recent Posts</label>
+                        <a href="{{ url_for('epsharing') }}" style="font-size:18px; color:black">Click Here to check your experience sharing</a>
+                        <!--show all the posts -->
+                        {% for post in posts.items %}
+                            <section id="content2" >
+                                <div class="question-type2033" >
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <div class="left-user12923 left-user12923-repeat">
+                                                <!-- yo need to retrieve the user images here from the database-->
+                                                <img src="{{url_for('static', filename='images/' + post.user.image_file)}}" alt="image"> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="right-description893">
+                                                <a class="mr-2" href="#">{{ post.user.username }}</a>
+                                                <small class="text-muted">{{post.post_date.strftime('%Y-%m-%d')}}</small>
+                                                <div id="que-hedder2983">
+                                                    <a href="{{url_for('post', pid=post.post_id)}}"><h3>{{ post.post_title }}</h3></a>
+                                                </div>
+                                                <div style="font-size:18px; white-space: pre-wrap;">
+                                                    <div  class="detailstext"><p>{{ post.content }}</p></div>        
+                                                </div>
+                                                <hr>
+                                                <!-- add like and  interested button here-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        {% endfor %}
+                        <!-- Page nums -->
+                        {% for pageNum in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                            {% if pageNum %}
+                                <!-- fill the current button -->
+                                {% if posts.page == pageNum %}
+                                    <a class="btn btn-info mb-5" href="{{url_for('homepage', page=pageNum)}}">{{pageNum}}</a>
+                                {% else %}
+                                    <a class="btn btn-outline-info mb-5" href="{{url_for('homepage', page=pageNum)}}">{{pageNum}}</a>
+                                {% endif %}
+                            {% else %}
+                                ...
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock content %}

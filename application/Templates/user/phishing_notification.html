@@ -1,0 +1,23 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div style="height:20px"></div>
+    <div class="content-section">
+        <h2>
+            This is a phishing simulation from GamiSE. If you want to submit a report to GamiSE, please click
+            <a href="{{ url_for('userreport') }}" style="font-size:18px; color:black"> Report.</a>
+        </h2>
+        <br>
+    </div>
+    <br>
+    <br>
+{% endblock content %}

@@ -1,0 +1,70 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <section class="main-content920">
+        <div class="container">
+            <div style="height:40px"></div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        {% if update %}
+                            <h4>{{ update }}</h4>
+                        {% else %}
+                            <h4> Post an Experience</h4>
+                        {% endif %}
+                        <hr>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <!-- ask the user for the subject-->
+                            <!-- Post title -->
+                            <div class="username-part940">
+                            {{ form.title.label(class="form-description43", style="font-size:18px") }}
+                            {% if form.title.errors %}
+                                {{ form.title(class="is-invalid", type="text", style="width:70%", placeholder="Write down the title") }}
+                                <div class="form-control-feedback">
+                                    {% for error in form.title.errors %}
+                                    <span> {{ error }} </span>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ form.title(type="text", style="width:70%", placeholder="Write down the title") }}
+                            {% endif %}
+                            </div>
+                            <!-- Post content -->
+                            <div class="email-part320">
+                                {{ form.content.label(class="form-description442", style="font-size:18px") }}
+                                        {% if form.content.errors %}
+                                            {{ form.content(class="form-control", id="description", cols="15", rows="10") }}
+                                            <div class="form-control-feedback">
+                                                {% for error in form.content.errors %}
+                                                <span> {{ error }} </span>
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            {{ form.content(class="form-control", id="description", cols="15", rows="10") }}
+                                        {% endif %}
+                                    <br>
+                                </div>	
+                                <div class="text-center">
+                                    {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                                    <a href="{{ url_for('homepage') }}"><button id="b2" type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+                                </div>
+                            </div>   
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<br>
+<br>
+
+{% endblock content %}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>GamiSE</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel="stylesheet" href="/static/css/loginstyle.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+</head>
+
+<body>
+    <div class="modal-wrap">
+        <div class="modal-bodies">
+            <div class ="modal-body modal-body-step-1 is-showing">
+                <!-- confirm register -->
+                {% with messages = get_flashed_messages(with_categories=True) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <div class="title"> Welcome to GamiSE</div>
+                <div class="description">Hello there, please Log In</div>
+                <form  method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <!-- Email -->
+                    {% if form.email.errors %}
+                        {{ form.email(type="text") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.email.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(type="text", placeholder="Email Address") }}
+                    {% endif %}
+                    <!-- Password -->
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.password.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg", placeholder="Password") }}
+                    {% endif %}
+                    <div class="text-center">
+                        {{ form.submit(class="button", type="submit") }}
+                        <a href="{{ url_for('reset_req')}}" > <small class="text-muted" style="font-size: 16px;"> Forgot Password?</small></a>
+                    </div>
+                    <div class="bottom text-center mb-5">
+                        <br>
+                        <p class="description" style="font-size: 16px;">Don't have an account? 
+                            <a href="{{ url_for('register') }}"  class="button">Register </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+</body>
+</html>
+
+
+

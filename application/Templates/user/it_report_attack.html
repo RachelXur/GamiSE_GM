@@ -1,0 +1,99 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <section class="welcome-part-one" style="padding-bottom: 0px;">
+        <div class="container" style="color: white;"> <h3> Submit a Solution</h3>
+        <ol class="breadcrumb breadcrumb839" style="background-color: transparent">
+            <li class="active" style="color: white;">IT Department Users</li>
+        </ol>
+        </div>
+    </section>
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        <h4> Submit a Solution</h4>
+                        <hr>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+                            <!-- ask the IT for the email subject-->
+                            <div class="username-part940">
+                                <span class="form-description43" style="font-size: 18px;"> Email Subject: </span><br>
+                                {% if form.subject.errors %}
+                                    {{ form.subject(class="is-invalid", type="text", style="width:70%", placeholder="Enter the email subject") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.subject.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.subject(type="text", style="width:70%", placeholder="Enter the email subject") }}
+                                {% endif %}
+                            </div>
+                            <!-- ask the IT for the sender email-->
+                            <div class="username-part940">
+                                <span class="form-description43" style="font-size: 18px;"> Sender Email: </span><br>
+                                {% if form.senderemail.errors %}
+                                    {{ form.senderemail(class="is-invalid", type="text", style="width:70%", placeholder="Enter the Sender Email") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.senderemail.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.senderemail(type="text", style="width:70%", placeholder="Enter the Sender Email") }}
+                                {% endif %}
+                            </div>
+                            <!-- IT department analyze the reason-->
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Analyze the reason?</span><br>
+                                {% if form.reason.errors %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", type="text") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.reason.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.reason(class="form-control", id="description", cols="15", rows="10", placeholder="Enter your reason") }}
+                                {% endif %}
+                            </div>
+                            <!-- explain the solution to the employees-->
+                            <div class="email-part320">
+                                <span class="form-description442" style="font-size: 18px;"> Explain the solution to the employees. </span><br>
+                                {% if form.solution.errors %}
+                                    {{ form.solution(class="form-control", id="description", cols="15", rows="10") }}
+                                    <div class="form-control-feedback">
+                                    {% for error in form.solution.errors %}
+                                        <span> {{ error }} </span>
+                                    {% endfor %}
+                                    </div>
+                                {% else %}
+                                    {{ form.solution(class="form-control", id="description", cols="15", rows="10", placeholder="Enter the solution") }}
+                                {% endif %}
+                            </div>
+                            <hr>
+                            <br>
+                            <div class="text-center">
+                                {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                                <a href="{{ url_for('rattack') }}" ><button id="b2" type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+
+    {% endblock content %}

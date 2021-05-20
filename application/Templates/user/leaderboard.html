@@ -1,0 +1,73 @@
+{% extends "/user/layout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+
+  <div class="modal-wrap">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-left" colspan="4">Your Rank</th>
+            </tr>
+            <tr class="text-left">
+              <th>NAME</th>
+              <th>POINT</th>
+              <th>RANK</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for leaderboard in pointlist %}
+            {% if leaderboard[1] == current_user.username %}
+              <tr class="text-left" style="color: white;font-size:18px;">
+                <td>{{ leaderboard[1] }}</td>
+                <td>{{ leaderboard[2] }}</td>
+                <td>{{ leaderboard[0] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %} 
+        </tbody>
+    </table>
+  </div>
+  <!-- all the users' leaderboard -->
+  <div class="modal-wrap">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th class="text-left" colspan="4">Leaderboard</th>
+            </tr>
+            <tr class="text-left">
+              <th>NAME</th>
+              <th>POINT</th>
+              <th>RANK</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for leaderboard in pointlist %}
+            {% if leaderboard[1] == current_user.username %}
+              <tr class="text-left" style="color: white;font-size:18px; background-color: salmon;">
+                <td>{{ leaderboard[1] }}</td>
+                <td>{{ leaderboard[2] }}</td>
+                <td>{{ leaderboard[0] }}</td>
+              </tr>
+            {% else %}
+              <tr style="color: white;font-size:18px;">
+                <td>{{ leaderboard[1] }}</td>
+                <td>{{ leaderboard[2] }}</td>
+                <td>{{ leaderboard[0] }}</td>
+              </tr>
+            {% endif %}
+          {% endfor %} 
+        </tbody>
+    </table>
+    <br>
+    <br>
+  </div>
+
+{% endblock content %}

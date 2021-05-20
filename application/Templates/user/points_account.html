@@ -1,0 +1,47 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="modal-wrap">
+      <table class="table table-hover">
+          <thead class="thead-dark">
+              <tr>
+                  <th class="text-left" colspan="4">Points Record</th>
+              </tr>
+              <tr class="text-left">
+                <th>Time</th>
+                <th>Add/Deduct points</th>
+                <th>Details</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for pointrecord in pointsrecord %}
+              <tr class="text-left" style="color: white;font-size:18px">
+                <td> {{ pointrecord.points_date.strftime('%Y-%m-%d') }} </td>
+                <td> {{ pointrecord.userpoint.add_points }} </td>
+                {% if pointrecord.points_id == 2 %}
+                  <td> Click Like to a post </td>
+                {% elif pointrecord.points_id == 3 %}
+                  <td> Click Not Interested to a post </td>
+                {% else %}
+                  <td> {{ pointrecord.reason}} </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+      
+    <br>
+    <br>
+{% endblock %}

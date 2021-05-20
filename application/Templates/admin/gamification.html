@@ -1,0 +1,145 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+
+          
+        <div class="modal-wrap">
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="3">Points</th>
+                        <a href="{{url_for('addpointrule')}}"><button type="button" class="btn btn-primary">Add</button></a>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Describe</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pointrule in pointrules %}
+                        <tr class="text-left" style="color: white;font-size:18px">
+                            <td>{{ pointrule.point_id }}</td>
+                            <td>
+                                <div style="color:white;">
+                                    <a href="{{url_for('check_pointrule', pid=pointrule.point_id)}}" style="color: white;">{{ pointrule.description }}</a>
+                                </div>
+                            </td>
+                            <td>{{ pointrule.add_points }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Achievements</th>
+                        <a href="{{url_for('addachievementrule')}}"><button type="button" class="btn btn-primary">Add</button></a>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>Points</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for achievementrule in achievementrules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ achievementrule.achievement_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_achievementrule', pid=achievementrule.achievement_id)}}" style="color: white;">{{ achievementrule.name }}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_achievementrule', pid=achievementrule.achievement_id)}}" style="color: white;">{{ achievementrule.description }}</a>
+                            </div>
+                        </td>
+                        <td>{{ achievementrule.add_points }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Badges</th>
+                        <a href="{{url_for('addbadgerule')}}"><button type="button" class="btn btn-primary">Add</button></a>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for badgerule in badgerules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ badgerule.badge_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_badgerule', pid=badgerule.badge_id)}}" style="color: white;">{{ badgerule.name }}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_badgerule', pid=badgerule.badge_id)}}" style="color: white;">{{ badgerule.description }}</a>
+                            </div>
+                        </td>
+                        <div class="left-user12923 img">
+                            <td><img src="{{url_for('static', filename='gamification_badges/' + badgerule.image_file)}}" alt="image" style="border-radius:50%; height:80px; width:80px;"></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th class="text-left" colspan="4">Reward</th>
+                        <a href="{{url_for('addrewardrule')}}"><button type="button" class="btn btn-primary">Add</button></a>
+                    </tr>
+                    <tr class="text-left">
+                        <th>Num</th>
+                        <th>Name</th>
+                        <th>Describe</th>
+                        <th>image</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rewardrule in rewardrules %}
+                    <tr class="text-left" style="color: white;font-size:18px">
+                        <td>{{ rewardrule.reward_id }}</td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_rewardrule', pid=rewardrule.reward_id)}}" style="color: white;">{{ rewardrule.name }}</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="color:white;">
+                                <a href="{{url_for('check_rewardrule', pid=rewardrule.reward_id)}}" style="color: white;">{{ rewardrule.description }}</a>
+                            </div>
+                        </td>
+                        <div class="left-user12923 img">
+                            <td><img src="{{url_for('static', filename='gamification_reward/' + rewardrule.image_file)}}" alt="image" style="border-radius:50%; height:80px; width:80px;"></td>
+                        </div>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+{% endblock content %}

@@ -1,0 +1,37 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div style="height:20px"></div>
+    <!-- content section, too see what everyone has shared-->
+    <section class="main-content920">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="ask-question-input-part032">
+                        <h4> Choose a report form</h4>
+                        <br><br>
+                        
+                        <div class="text-center">
+                            <a href="{{ url_for('itreport') }}" ><div class="button">Submit a Solution</div></a>
+                            <a href="{{ url_for('checkuserreport') }}" ><div class="button">Check User Reports</div></a>
+                        </div>
+  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <br>
+    <br>
+
+{% endblock content %}

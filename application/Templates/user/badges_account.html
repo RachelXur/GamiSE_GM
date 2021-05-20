@@ -1,0 +1,41 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="modal-wrap">
+      <table class="table table-hover">
+          <thead class="thead-dark">
+              <tr>
+                  <th class="text-left" colspan="4">Badges Record</th>
+              </tr>
+              <tr class="text-left">
+                <th>Time</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Badge</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for badgerecord in badgesrecord %}
+              <tr class="text-left" style="color: white;font-size:18px">
+                <td> {{ badgerecord[0].strftime('%Y-%m-%d') }} </td>
+                <td> {{ badgerecord[1] }} </td>
+                <td> {{ badgerecord[2] }} </td>
+                <td><img src="{{url_for('static', filename='gamification_badges/' + badgerecord[3])}}" alt="image" style="border-radius:50%; height:80px; width:80px;"></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+      </table>
+      <br>
+      <br>
+    </div>
+{% endblock %}
+

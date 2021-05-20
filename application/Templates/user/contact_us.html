@@ -1,0 +1,39 @@
+{% extends "/user/layout_footerfixed.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages(with_categories=True) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div style="height:20px"></div>
+    <div class="content-section">
+        <h2>
+            If you have any question, please feel free to contact us.
+        </h2>
+        <br>
+        <a href="mailto:gamise@fastmail.com">
+            <h4 style="color: black;">
+                Platform Email:<br>
+            </h4>
+            <h5 style="color: black;">
+                gamise@fastmail.com
+            </h5>
+        </a>
+        <a href="mailto:xu1ac@uwindsor.ca">
+            <h4 style="color: black;">
+                Developer Email:<br>
+            </h4>
+            <h5 style="color: black;">
+                xu1ac@uwindsor.ca
+            </h5>
+            
+        </a>
+    </div>
+    <br>
+    <br>
+{% endblock content %}

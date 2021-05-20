@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GamiSE</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet">
+        <link rel="stylesheet" href="/static/css/loginstyle.css">
+        <link rel="stylesheet" href="/static/css/style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+            }
+            h1{
+                width: 50%;
+                background-color: rgb(0, 0, 0, 0.6);
+                margin: auto;
+                color: #ffffff;
+                padding: 10px, 0px;
+                text-align: center;
+                border-radius: 15px 15px 0 0;
+                margin-top: 3%;
+            }
+            .tips{
+                background-color: rgb(0, 0, 0,0.5);
+                width: 50%;
+                margin: auto;
+                border-radius:0 0 15px 15px;
+                margin-bottom: 5%;
+            }
+            form{
+                padding: 5%;
+                
+            }
+            label{
+                color: azure;
+                font-weight: 600;
+                display: flex;
+            }
+            #people{
+                position: relative;
+                border-radius: 5px;
+                width: 100%;
+                outline: none;
+                overflow: hidden;
+            }
+            #des{
+                width: 100%;
+                border-radius: 7px;
+            }
+
+            .btons{
+                display: flex;
+                justify-content: space-evenly;
+                padding-bottom: 5%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="newshead"><h1>Daily Tips</h1></div>
+        <div class="tips">
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <!-- daily email_news submit form. Includes title, link, imag_url, and description. -->
+                <!-- receiver type -->
+                <div>
+                    <label for="people">Receivers</label>
+                        {{ form.receiver (placeholder="Select") }}
+                </div>
+                <div>
+                    <!-- Title -->
+                    {% if form.title.errors %}
+                        <label for="title">Title</label>
+                        {{ form.title(type="text", placeholder="Title") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.title.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <label for="title">Title</label>
+                        {{ form.title(type="text", placeholder="Title") }}
+                    {% endif %}
+                </div>
+                <!-- Link -->
+                <div>
+                    {% if form.link.errors %}
+                        <label for="link">Link</label>
+                        {{ form.link(type="text", placeholder="Link") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.link.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <label for="link">Link</label>
+                        {{ form.link(type="text", placeholder="Link") }}
+                    {% endif %}
+                </div>
+                <!-- Image URL -->
+                <div>
+                    {% if form.image_url.errors %}
+                        <label for="image_url">Image URL</label>
+                        {{ form.image_url(type="text", placeholder="Image URL") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.image_url.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <label for="image_url">Image URL</label>
+                        {{ form.image_url(type="text", placeholder="Image URL") }}
+                    {% endif %}
+                </div>
+                <div>
+                    {% if form.content.errors %}
+                        <label for="content">Content</label>
+                        {{ form.content(class="form-control", id="content", cols="30", rows="10") }}
+                        <div class="form-control-feedback">
+                            {% for error in form.content.errors %}
+                                <span> {{ error }} </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <label for="content">Content</label>
+                        {{ form.content(class="form-control", id="content", cols="30", rows="10") }}
+                    {% endif %}
+                    <br>
+                </div>
+                <div class="btons">
+                    {{ form.submit(type="submit", class="btn btn-primary btn-lg") }}
+                    <a href="{{ url_for('daily') }}"><button id="b2" type="button" class="btn btn-secondary btn-lg">Cancel</button></a>
+                </div>
+            </form>
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    </body>
+</html>

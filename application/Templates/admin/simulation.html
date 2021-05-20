@@ -1,0 +1,49 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+
+
+
+        <div class="modal-bodies">
+            <div class="simuhead"><h1>Simulation</h1></div>
+            <div class ="simulate">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    <!-- Campaign Name -->
+                    <div class="form-group">
+                        {{ form.campaign_name.label(for="name", style="font-size: 18px;") }}
+                        {% if form.campaign_name.errors %}
+                            {{ form.campaign_name(type="text") }}
+                            <div class="form-control-feedback">
+                                {% for error in form.campaign_name.errors %}
+                                    <span> {{ error }} </span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.campaign_name(class="form-control", id="name", style="font-size: 18px;") }}
+                        {% endif %}
+                    </div>
+                    <br>
+                    <!-- Campaign Type -->
+                    <div class="form-group">
+                        <label for="type" style="font-size: 18px;">Phishing email type</label>
+                            {{ form.phishing_type (class="custom-select", id="type", style="font-size: 18px; height: 35px", placeholder="Select") }}  
+                    </div>
+                    <br>
+                    <br>
+                    <div class="btns">
+                        {{ form.submit(type="submit", class="btn btn-primary btn-lg", style="font-size: 20px") }}
+                        <a class="ml-2" href="{{ url_for('daily') }}"><button type="button" class="btn btn-secondary btn-lg" style="font-size: 20px">Cancel</button></a>
+                    </div>
+                </form>
+            </div>
+        </div>
+{% endblock content%}
