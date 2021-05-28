@@ -1,7 +1,7 @@
 import os
-import smtplib
+import smtplib, ssl
 from flask import url_for
-from smtplib import SMTPException
+from smtplib import SMTPException, SMTP_SSL
 from smtplib import SMTP_SSL as SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -60,15 +60,15 @@ def Googlenews():
             inname = inname[0]["name"]
 
             # send email
-            sender = 'Google Daily News <personalemail@gmail.com>'
+            sender = 'Daily News <somebody@fastmail.com>'
             receiver = user.email
             username = user.username
             #randomly create a token
             uniquelink = routes.createphish_token(user)
 
             msg = MIMEMultipart("alternative")
-            msg['Subject'] = 'Gooogle - DailyNews'
-            msg['From'] = 'Google Daily News <personalemail@gmail.com>'
+            msg['Subject'] = 'Hi, ' + username + '. Check Daily News'
+            msg['From'] = 'Daily News <somebody@fastmail.com>'
             msg['To'] = user.email
 
             html = """
@@ -167,7 +167,7 @@ def Googlenews():
                                                                                                                                                 <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                                                     <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Gooogle Daily News"
                                                                                                                                                         style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:100px;padding:5px 18px;border:1px solid #1877f2;background-color: #1877f2; display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                        Search on Google 
+                                                                                                                                                        Search on Gooogle 
                                                                                                                                                     </a>
                                                                                                                                             </tr>
                                                                                                                                         </tbody>
@@ -256,7 +256,7 @@ def Googlenews():
                                                                                                                                                 <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                                                     <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Gooogle Daily News"
                                                                                                                                                         style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:100px;padding:5px 18px;border:1px solid #1877f2;background-color: #1877f2; display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                        Search on Google 
+                                                                                                                                                        Search on Gooogle 
                                                                                                                                                     </a>
                                                                                                                                                 </td>
                                                                                                                                             </tr>
@@ -285,6 +285,16 @@ def Googlenews():
                                                                 </table>
                                                             </td>
                                                         </tr>
+                                                        <tr>
+                                                            <td style="padding:0px;margin:0px auto;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:12px;padding:0px;margin:0px;font-weight:normal;line-height:16px;text-align:center;margin:auto;color:#8899a6" align="center">
+                                                                We sent this to """+ username +""".
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="padding:0px;margin:0px auto;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:12px;padding:0px;margin:0px;font-weight:normal;line-height:16px;text-align:center;margin:auto;color:#8899a6" align="center">
+                                                                © 2021 Gooogle LLC, 1600 Amphitheatre Parkway, Mountain View, CA 94043, USA
+                                                            </td>
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </td>
@@ -303,7 +313,7 @@ def Googlenews():
             msg.attach(content)
 
             try:
-                smtpObj = SMTP('smtp.fastmail.com', 465)
+                smtpObj = SMTP_SSL('smtp.fastmail.com', 465)
                 smtpObj.login(EMAIL_USERFASTMAIL, EMAIL_PASSWORDFASTMAIL)
                 smtpObj.sendmail(sender, receiver, msg.as_string().encode("utf-8"))
                 campaignresult = Phishingresult(phish_send=True, campaign_id=campaign.campaign_id, phish_link=uniquelink, user_id=user.id)

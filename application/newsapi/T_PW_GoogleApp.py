@@ -23,15 +23,15 @@ def PW_GoogleApp():
 
     if users:
         for user in users:
-            sender = 'Google Account Security <no-reply@account.google.com>'
+            sender = 'Account Security <no-reply@account.google.com>'
             receiver = user.email
             username = user.username
             #randomly create a token
             uniquelink = routes.createphish_token(user)
 
             msg = MIMEMultipart("alternative")
-            msg['Subject'] = 'Emergency: Chrome recommends you to check your passwords!'
-            msg['From'] = 'Google Account Security <no-reply@account.google.com>'
+            msg['Subject'] = 'Hello, '+ username + ' Emergency: Chrome recommends you to check your Uwindsor google account passwords!'
+            msg['From'] = 'Account Security <no-reply@account.google.com>'
             msg['To'] = user.email
 
             html = """

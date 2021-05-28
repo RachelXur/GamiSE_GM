@@ -1,0 +1,37 @@
+{% extends "/admin/adminlayout.html" %}
+{% block content %}
+  {% with messages = get_flashed_messages(with_categories=True) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+        
+    <div class="modal-wrap">
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="text-left" colspan="4">Rewards</th>
+                </tr>
+                <tr class="text-left">
+                    <th>NAME</th>
+                    <th>DATE</th>
+                    <th>REWARD</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for win in winlist %}
+                    <tr style="color: white;">
+                        <td>{{ win[0] }}</td>
+                        <td>{{ win[1] }}</td>
+                        <td>{{ win[2] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+        
+{% endblock content %}

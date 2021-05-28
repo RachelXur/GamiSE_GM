@@ -134,7 +134,7 @@ def register():
 @login_required
 def homepage():
     today = datetime.now()
-    date = today - timedelta(days=7)
+    date = today - timedelta(days=5)
     reports = Itreport.query.filter(Itreport.report_date >= date).order_by(desc(Itreport.report_date)).all()
     posts = Post.query.order_by(desc(Post.post_date)).paginate(per_page=5)
     return render_template('user/index.html', title='Homepage', reports=reports, posts=posts, date=date)
@@ -1285,6 +1285,22 @@ def admin_leaderboard():
         if form.validate_on_submit():
             pickWins()
         return render_template("admin/adminside_leaderboard.html", pointlist=pointlist, form=form)
+    else:
+        return redirect(url_for('homepage'))
+
+#check user rewards
+@app.route("/admin/userrewards", methods=['GET', 'POST'])
+@login_required
+def admin_userreward():
+    if current_user.position == 'Admin':
+        winlist = []
+        wins = Userrewards.query.order_by(desc(Userrewards.reward_date)).all()
+        for win in wins:
+            name = User.query.filter_by(id=win.user_id).first()
+            date = win.reward_date.strftime('%Y-%m-%d')
+            reward = Rewardrules.query.filter_by(reward_id=win.reward_id).first()
+            winlist.append([name.username, date, reward.name])
+        return render_template("admin/admincheckuserrewards.html", winlist=winlist)
     else:
         return redirect(url_for('homepage'))
 
