@@ -4,6 +4,8 @@ from flask import url_for
 from email.message import EmailMessage
 from application.forms import DailyTipsForm
 from application.model import User
+import time
+from application import routes
 
 def dailyemailtipsimage():
     EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
@@ -16,6 +18,7 @@ def dailyemailtipsimage():
         title = form.title.data
         content = form.content.data
         link = form.link.data
+        uniquelink = routes.createphish_token(user)
 
         msg = EmailMessage()
         msg['Subject'] = 'Daily Email - GamiSE'
@@ -91,7 +94,7 @@ def dailyemailtipsimage():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                             <br>
-                                                                                                                                <a href="""+ url_for('pexperience', _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('pexperience', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Share on GamiSE 
                                                                                                                                 </a>
                                                                                                                                 <br><br><hr>
@@ -112,7 +115,7 @@ def dailyemailtipsimage():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                             <br>
-                                                                                                                                <a href="""+ url_for('userreport', _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('userreport', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Report on GamiSE 
                                                                                                                                 </a>
                                                                                                                                 <br><br><hr>
@@ -187,7 +190,7 @@ def dailyemailtipsimage():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                                 <br>
-                                                                                                                                <a href="""+ url_for('withdrawal', _external=True) +""" style="text-align:center;width:35%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('withdrawal', token=uniquelink, _external=True) +""" style="text-align:center;width:35%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Request a Withdrawal 
                                                                                                                                 </a>
                                                                                                                                 <br><br>
@@ -229,6 +232,7 @@ def dailyemailtipsimage():
 
         with smtplib.SMTP_SSL('smtp.fastmail.com', 465) as smtp:
             smtp.login(EMAIL_USERFASTMAIL, EMAIL_PASSWORDFASTMAIL)
+            time.sleep(2)
             smtp.send_message(msg)
             smtp.quit()
     return title, image_url, content, link

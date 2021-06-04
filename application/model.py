@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
     qj = db.Column(db.String(40), nullable=False)
     qk = db.Column(db.String(40), nullable=False)
     post_count = db.Column(db.Integer, default=0)
+    confirm = db.Column(db.Boolean, nullable=False, default=False)
     posts = db.relationship('Post', backref='user', lazy=True)
     user_report = db.relationship('Userreport', backref='user', lazy=True)
     it_report = db.relationship('Itreport', backref='user', lazy=True)
@@ -123,7 +124,7 @@ class DislikePostRecord(db.Model):
 # IT department unique code
 class Ituser(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    usercode = db.Column(db.Integer, nullable=True, default=0)
+    usercode = db.Column(db.String(20), nullable=True, default=0)
 
     def __repr__(self):
         return f"Ituser('{self.id}','{self.usercode}')"
@@ -152,8 +153,8 @@ class Withdrawal(db.Model):
     qd = db.Column(db.String(40), nullable=False)
     reason = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(200), unique=True, nullable=False)
+    username = db.Column(db.String(20), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
 
     def __repr__(self):
         return f"Withdrawal('{self.withdrawal_id}', '{self.withdrawal_date}', '{self.qa}', '{self.qb}', '{self.qc}', '{self.feedback}')"
@@ -308,3 +309,14 @@ class Photo(db.Model):
 
     def __repr__(self):
         return f"Photoselect('{self.photo_id}', '{self.path}')"
+
+
+# A record that save the email address changing
+class Emailchangerecord(db.Model):
+    record_id = db.Column(db.Integer, primary_key=True)
+    record_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    before = db.Column(db.String(200), nullable=False)
+    after = db.Column(db.String(200), nullable=False)
+
+    def __repr__(self):
+        return f"Emailchangerecord('{self.record_id}', '{self.record_date}', '{self.before}', '{self.after}')"

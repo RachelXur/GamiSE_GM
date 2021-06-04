@@ -2,25 +2,23 @@ import os
 import smtplib, ssl
 from flask import url_for
 from email.message import EmailMessage
-from application.forms import DailyTipsForm
+from application.forms import DailyNewsForm
 from application.model import User
 from application import routes
 import time
 
-def dailyemailtipsimage_IT():
+def dailyemailnews_IT_noimage():
     EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
     EMAIL_PASSWORDFASTMAIL = os.environ.get('EMAIL_PASSWORDFASTMAIL')
     users = User.query.filter_by(position="IT").all()
 
     for user in users:
-
-        form = DailyTipsForm()
-        image_url = form.image_url.data
+        form = DailyNewsForm()
         title = form.title.data
-        content = form.content.data
+        description = form.description.data
         link = form.link.data
         uniquelink = routes.createphish_token(user)
-        
+
         msg = EmailMessage()
         msg['Subject'] = 'Daily Email - GamiSE'
         msg['From'] = 'GamiSE <gamise@fastmail.com>'
@@ -129,13 +127,7 @@ def dailyemailtipsimage_IT():
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:28px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
-                                                                                                                                                Social Engineering Attack tip:
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                        <tr>
-                                                                                                                                            <td style="padding: 0px;">
-                                                                                                                                                <br>
-                                                                                                                                                <img src = """+ image_url +""" width="598.89" height="399.25">
+                                                                                                                                                Social Engineering Attack News:
                                                                                                                                             </td>
                                                                                                                                         </tr>
                                                                                                                                         <tr>
@@ -153,7 +145,7 @@ def dailyemailtipsimage_IT():
                                                                                                                                         </tr>
                                                                                                                                         <tr>
                                                                                                                                             <td style="padding: 0px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;line-height: 18px;color: #292f33;">
-                                                                                                                                            """+ content +""" </td>
+                                                                                                                                            """+ description +""" </td>
                                                                                                                                         </tr>
                                                                                                                                         <tr>
                                                                                                                                             <td height="14" style="height: 14px;padding: 0px;"></td>
@@ -218,5 +210,4 @@ def dailyemailtipsimage_IT():
             time.sleep(2)
             smtp.send_message(msg)
             smtp.quit()
-    return title, image_url, content, link
-        
+    return title, description, link

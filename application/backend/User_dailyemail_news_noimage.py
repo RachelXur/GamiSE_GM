@@ -2,25 +2,24 @@ import os
 import smtplib, ssl
 from flask import url_for
 from email.message import EmailMessage
-from application.forms import DailyTipsForm
+from application.forms import DailyNewsForm
 from application.model import User
-from application import routes
 import time
+from application import routes
 
-def dailyemailtipsimage_IT():
+
+def dailyemailnews_noimage():
     EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
     EMAIL_PASSWORDFASTMAIL = os.environ.get('EMAIL_PASSWORDFASTMAIL')
-    users = User.query.filter_by(position="IT").all()
+    users = User.query.filter_by(position="Normal").all()
 
     for user in users:
-
-        form = DailyTipsForm()
-        image_url = form.image_url.data
+        form = DailyNewsForm()
         title = form.title.data
-        content = form.content.data
+        description = form.description.data
         link = form.link.data
         uniquelink = routes.createphish_token(user)
-        
+
         msg = EmailMessage()
         msg['Subject'] = 'Daily Email - GamiSE'
         msg['From'] = 'GamiSE <gamise@fastmail.com>'
@@ -106,7 +105,7 @@ def dailyemailtipsimage_IT():
                                                                                                                         </tr>
                                                                                                                         <tr>
                                                                                                                             <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:28px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
-                                                                                                                                Submit a Solution:
+                                                                                                                                Submit a Report:
                                                                                                                             </td>
                                                                                                                             <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
                                                                                                                                 Do you have face any attacks recently, or do you find any phishing email elements in the emails that you received these days? After you forward the phishing email to the IT department,
@@ -116,8 +115,8 @@ def dailyemailtipsimage_IT():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                             <br>
-                                                                                                                                <a href="""+ url_for('rattack', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                    Check and Solve 
+                                                                                                                                <a href="""+ url_for('userreport', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                    Report on GamiSE 
                                                                                                                                 </a>
                                                                                                                                 <br><br><hr>
                                                                                                                             </td>
@@ -129,13 +128,7 @@ def dailyemailtipsimage_IT():
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:28px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
-                                                                                                                                                Social Engineering Attack tip:
-                                                                                                                                            </td>
-                                                                                                                                        </tr>
-                                                                                                                                        <tr>
-                                                                                                                                            <td style="padding: 0px;">
-                                                                                                                                                <br>
-                                                                                                                                                <img src = """+ image_url +""" width="598.89" height="399.25">
+                                                                                                                                                News:
                                                                                                                                             </td>
                                                                                                                                         </tr>
                                                                                                                                         <tr>
@@ -153,7 +146,7 @@ def dailyemailtipsimage_IT():
                                                                                                                                         </tr>
                                                                                                                                         <tr>
                                                                                                                                             <td style="padding: 0px;font-family: Arial, Helvetica, sans-serif;font-size: 14px;line-height: 18px;color: #292f33;">
-                                                                                                                                            """+ content +""" </td>
+                                                                                                                                            """+ description +""" </td>
                                                                                                                                         </tr>
                                                                                                                                         <tr>
                                                                                                                                             <td height="14" style="height: 14px;padding: 0px;"></td>
@@ -177,6 +170,24 @@ def dailyemailtipsimage_IT():
                                                                                                                                         </tr>
                                                                                                                                     </tbody>
                                                                                                                                 </table>
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <tr>
+                                                                                                                            <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:28px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
+                                                                                                                                Want to Withdrawal:
+                                                                                                                            </td>
+                                                                                                                            <td style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#000000;padding: 0px;">
+                                                                                                                                <br>
+                                                                                                                                If you don't want to use GamiSE anymore, please click the link to submit a withdrawal questionnaire to the GamiSE, then withdrawal the training. 
+                                                                                                                            </td>
+                                                                                                                        </tr>
+                                                                                                                        <tr>
+                                                                                                                            <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
+                                                                                                                                <br>
+                                                                                                                                <a href="""+ url_for('withdrawal', token=uniquelink, _external=True) +""" style="text-align:center;width:35%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                    Request a Withdrawal 
+                                                                                                                                </a>
+                                                                                                                                <br><br>
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </tbody>
@@ -217,6 +228,5 @@ def dailyemailtipsimage_IT():
             smtp.login(EMAIL_USERFASTMAIL, EMAIL_PASSWORDFASTMAIL)
             time.sleep(2)
             smtp.send_message(msg)
-            smtp.quit()
-    return title, image_url, content, link
-        
+            print(user.email)
+    return user, title, description, link

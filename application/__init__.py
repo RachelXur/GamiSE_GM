@@ -21,11 +21,11 @@ bcrypt = Bcrypt(app)
 mail = Mail(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-login_manager.login_message_category = 'a.text-info'
+login_manager.login_message_category = 'danger'
 
 from application import routes
 from application import model
 
 aps = BackgroundScheduler(daemon=True)
-aps.add_job(routes.pickWins,'cron', day_of_week='fri', hour=10, minute=00, second=0)
+aps.add_job(routes.pickWins,'cron', day_of_week='fri', hour=9, minute=00, second=0)
 aps.start()

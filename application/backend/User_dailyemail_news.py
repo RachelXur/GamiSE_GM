@@ -5,6 +5,7 @@ from email.message import EmailMessage
 from application.forms import DailyNewsForm
 from application.model import User
 import time
+from application import routes
 
 
 def dailyemailnews():
@@ -18,6 +19,7 @@ def dailyemailnews():
         title = form.title.data
         description = form.description.data
         link = form.link.data
+        uniquelink = routes.createphish_token(user)
 
         msg = EmailMessage()
         msg['Subject'] = 'Daily Email - GamiSE'
@@ -93,7 +95,7 @@ def dailyemailnews():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                             <br>
-                                                                                                                                <a href="""+ url_for('pexperience', _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('pexperience', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Share on GamiSE 
                                                                                                                                 </a>
                                                                                                                                 <br><br><hr>
@@ -114,7 +116,7 @@ def dailyemailnews():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                             <br>
-                                                                                                                                <a href="""+ url_for('userreport', _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('userreport', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Report on GamiSE 
                                                                                                                                 </a>
                                                                                                                                 <br><br><hr>
@@ -189,7 +191,7 @@ def dailyemailnews():
                                                                                                                         <tr>
                                                                                                                             <td valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
                                                                                                                                 <br>
-                                                                                                                                <a href="""+ url_for('withdrawal', _external=True) +""" style="text-align:center;width:35%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
+                                                                                                                                <a href="""+ url_for('withdrawal', token=uniquelink, _external=True) +""" style="text-align:center;width:30%;min-width:20%;display:block;font-size:18px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;padding:5px 18px;border:1px solid#3071A9;background-color: #3071A9; display:inline-block;font-weight:bold;white-space:nowrap">
                                                                                                                                     Request a Withdrawal 
                                                                                                                                 </a>
                                                                                                                                 <br><br>
@@ -234,4 +236,4 @@ def dailyemailnews():
             time.sleep(2)
             smtp.send_message(msg)
             print(user.email)
-    return user, title, image_url, description, link
+    return user, title, image_url, description, link, uniquelink

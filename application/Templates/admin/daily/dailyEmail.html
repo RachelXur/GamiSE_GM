@@ -10,16 +10,17 @@
       {% endif %}
   {% endwith %}
         
-      <div id="dailybutton">
-          
-          <a href="{{ url_for('news') }}"><button id="b1" type="button" class="btn btn-primary btn-lg">News</button></a>
-          <a href="{{ url_for('tips') }}"><button id="b2" type="button" class="btn btn-secondary btn-lg" >Tips</button></a>
-          
-      </div>
-      <div id="dailybutton">
-          
-        <a href="{{ url_for('simulation_note') }}"><button id="b3" type="button" class="btn btn-primary btn-lg" >Simulation Notification</button></a>
-        <a href="{{ url_for('check_user') }}"><button id="b4" type="button" class="btn btn-secondary btn-lg">WithDrawal</button></a>
+  <div id="dailybutton">
+    <table>
+        <tr>
+            <td><button id="b1" type="button" class="btn btn-primary btn-lg" style="color: white;" onclick="dailynews()">News</button></td>
+            <td><button id="b2" type="button" class="btn btn-secondary btn-lg" style="color: white;" onclick="dailytips()">Tips</button></td>
+        </tr>
+        <tr>
+            <td><button id="b3" type="button" class="btn btn-primary btn-lg" style="color: white;" onclick="adminsendnotebutton()">Simulation Notification</button></td>
+            <td><button id="b4" type="button" class="btn btn-secondary btn-lg" style="color: white;" onclick="adminwithdrawalbutton()">WithDrawal</button></td>
+        </tr>
         
-    </div>
+    </table>
+</div>
 {% endblock content%}

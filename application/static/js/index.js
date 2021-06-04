@@ -87,4 +87,22 @@ function unlike(pid, flag) {
 }
 
 
+function postclick(){
+    window.location.href="/post/post_experience"
+}
 
+function dailynews(){
+    window.location.href="/admin/daily/news"
+}
+
+function dailytips(){
+    window.location.href="/admin/daily/tips"
+}
+
+function adminwithdrawalbutton(){
+    window.location.href="/admin/user_information"
+}
+
+function adminsendnotebutton(){
+    window.location.href="/admin/daily/simulation_note"
+}
