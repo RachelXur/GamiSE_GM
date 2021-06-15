@@ -18,15 +18,15 @@ def tablet_Scotia(usersscotia):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in usersscotia:
-        sender = 'Scotia Bank <scotiabank@email.scotiabank.com>'
+        sender = 'Scotia Bank <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
         uniquelink = routes.createphish_token(user)
 
         msg = MIMEMultipart("alternative")
-        msg['Subject'] = 'Scotia Bank - Chance to get a Tablet!'
-        msg['From'] = "Scotia Bank <scotiabank@email.scotiabank.com>"
+        msg['Subject'] = 'Scotia Bank - Limited Time, Chance to get a Tabllet!'
+        msg['From'] = "Scotia Bank <gamise@fastmail.com>"
         msg['To'] = user.email
 
         html = """
@@ -153,7 +153,7 @@ def tablet_Scotia(usersscotia):
                                                                 <p>When you open an eligible Scotiabank account.
                                                                 </p>
                                                                 <p>
-                                                                    Offer ends June 1, 2021. Conditions apply.
+                                                                    Offer ends June 30, 2021. Conditions apply.
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -202,9 +202,9 @@ def tablet_Scotia(usersscotia):
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 Open an eligible Scotiabank account by 
                                                                                 <Strong>
-                                                                                    June 1, 2021
+                                                                                    June 30, 2021
                                                                                 </Strong><br>
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195); text-decoration:none">
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195); text-decoration:none" title="Scotia Bank chance to get a tablet">
                                                                                     <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0,0,0);">> Get Started</strong>
                                                                                 </a> 
                                                                             </td>
@@ -218,8 +218,8 @@ def tablet_Scotia(usersscotia):
                                                                                 <strong>2</strong>
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px;">
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);text-decoration:none" >
-                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 1, 2021:</strong>
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);text-decoration:none" title="Scotia Bank chance to get a tablet">
+                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 30, 2021:</strong>
                                                                                 </a>
                                                                                 <li style="color: rgb(0,0,0);">
                                                                                     <span style="color:rgb(0, 0, 0)">
@@ -244,7 +244,7 @@ def tablet_Scotia(usersscotia):
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 We’ll send you an email shortly after you qualify with instructions on how to order your 
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,0,0);text-decoration:none">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,0,0);text-decoration:none" title="Scotia Bank chance to get a tablet">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
                                                                                 <br><br>
                                                                             </td>
                                                                         </tr>
@@ -281,7 +281,7 @@ def tablet_Scotia(usersscotia):
                                                                                                                         <tr>
                                                                                                                             <td align="center" style="border-collapse:collapse;border-collapse:collapse;font-family:Scotia,Arial,Helvetica,sans-serif;font-size:12px;line-height:15px;color:#333333">
                                                                                                                                 <br>
-                                                                                                                                © 2020 Scotiabank. All Rights Reserved.<br>
+                                                                                                                                © 2019 Scotiabank. All Rights Reserved.<br>
                                                                                                                                 Please do not reply to this email, this mailbox is not monitored.
                                                                                                                             </td>
                                                                                                                         </tr>
@@ -300,13 +300,13 @@ def tablet_Scotia(usersscotia):
                                                                                         <tr>
                                                                                             <td align="left" style="border-collapse:collapse;border-collapse:collapse;font-family:Scotia,Arial,Helvetica,sans-serif;font-size:11px;line-height:15px;color:#333333">
                                                                                                 <br>
-                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">
+                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline" title="UNSUBSCRIBE">
                                                                                                     <span style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">UNSUBSCRIBE</span>
                                                                                                 </a>  |   
-                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">
+                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline" title="CONTACT US">
                                                                                                     <span style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">CONTACT US</span>
                                                                                                 </a>  |   
-                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">
+                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline" title="PRIVACY POLICY">
                                                                                                     <span style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline">PRIVACY POLICY</span>
                                                                                                 </a><br>
                                                                                             </td>
@@ -360,7 +360,7 @@ def tablet_Scotia(usersscotia):
                                                                                                 <a style="border-collapse:collapse;border-collapse:collapse;text-decoration:none;color:#333333">
                                                                                                     4‌4 King Street West, Toronto, ON M5H 1H1  |  
                                                                                                 </a>
-                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline" >
+                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="border-collapse:collapse;border-collapse:collapse;color:#333333;text-decoration:underline" title="Scotia Bank">
                                                                                                         www.scotiabank.com
                                                                                                 </a>
                                                                                                 <br><br><br>

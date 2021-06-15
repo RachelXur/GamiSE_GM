@@ -5,18 +5,16 @@ from smtplib import SMTPException
 from smtplib import SMTP_SSL as SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from application.model import User, Phishingresult, Phishingcampaign
+from application.model import Phishingresult, Phishingcampaign
 from application.forms import SimulationForm
 from application import routes
 from application import db
-import random
-import webbrowser
 
 def PWchange(userspw):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in userspw:
-        sender = 'IT services <noreply@uwindsor.ca>'
+        sender = 'IT services <gamise@fastmail.com>'
         receiver = [user.email]
         username = user.username
         #randomly create a token
@@ -25,8 +23,8 @@ def PWchange(userspw):
         EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
         EMAIL_PASSWORDFASTMAIL = os.environ.get('EMAIL_PASSWORDFASTMAIL')
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = "MFA Password Malicious Acticity"
-        msg["From"] = 'IT services <noreply@uwindsor.ca>'
+        msg["Subject"] = "Emergency: MFA Password Malicious Acticity"
+        msg["From"] = 'IT services <gamise@fastmail.com>'
         msg["To"] = user.email
 
         html = """
@@ -40,8 +38,6 @@ def PWchange(userspw):
                 font-family: arial, sans-serif;
             }
             </style>
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title>Gmail - Fwd: Action Required: Set up your MFA options</title>
             <style type="text/css" nonce="BOBlc+hlRjdIGW1093nMfw">
             body, td 
             {
@@ -134,7 +130,7 @@ def PWchange(userspw):
                                                                         <span>
                                                                             <p style="font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif"> 
                                                                                 <strong>If it is not you, please check your account status and change the password. </strong>
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
+                                                                                <a href="""+ url_for('acccountsecurity', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
                                                                                     Click here to change the password.
                                                                                 </a>
                                                                             </p>
@@ -161,7 +157,7 @@ def PWchange(userspw):
                                                                         </p>
                                                                         <ol style="margin-top:0cm" start="1" type="1">
                                                                             <li style="margin-left:0cm" >
-                                                                                <a href="mailto:MFA@uwindsor.ca" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
+                                                                                <a href="""+ url_for('acccountsecurity', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
                                                                                     UWinID@uwindsor.ca
                                                                                 </a> 
                                                                                 <u></u><u></u>
@@ -184,7 +180,7 @@ def PWchange(userspw):
                                                                         </p>
                                                                         <p class="MsoNormal" style="font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif">
                                                                             For complete details about signing in with MFA, please 
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
+                                                                            <a href="""+ url_for('acccountsecurity', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
                                                                                 review this article
                                                                             </a>. 
                                                                             <u></u><u></u>
@@ -209,14 +205,14 @@ def PWchange(userspw):
                                                                             <span style="font-size:12.0pt;font-family:&quot;Calibri&quot;,sans-serif">
                                                                                 If you need assistance with MFA, please 
                                                                             </span>
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
+                                                                            <a href="""+ url_for('acccountsecurity', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
                                                                                 <span style="background:white;font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif">
                                                                                     ask a question
                                                                                 </span>
                                                                             </a>,
                                                                             <span style="color:black;background:white"> 
                                                                             </span>
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
+                                                                            <a href="""+ url_for('acccountsecurity', token=uniquelink, _external=True) +""" target="_blank" style="font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif;">
                                                                                 <span style="background:white;font-size:12.0pt;color:#4285f4;text-decoration-line: none;font-family:&quot;Calibri&quot;,sans-serif">
                                                                                     open a UWin Account ticket
                                                                                 </span>

@@ -5,13 +5,10 @@ from smtplib import SMTPException
 from smtplib import SMTP_SSL as SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from email.message import EmailMessage
-from application.model import User, Phishingresult, Phishingcampaign
+from application.model import Phishingresult, Phishingcampaign
 from application.forms import SimulationForm
 from application import routes
 from application import db
-import random
-import webbrowser
 
 def PW_Google(userspwgoogle):
 
@@ -20,15 +17,15 @@ def PW_Google(userspwgoogle):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in userspwgoogle:
-        sender = 'Account Security <no-reply@account.google.com>'
+        sender = 'Account Security <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
         uniquelink = routes.createphish_token(user)
 
         msg = MIMEMultipart("alternative")
-        msg['Subject'] = 'Hello, '+ username + ' Important changes to your Uwindsor Google Account and services.'
-        msg['From'] = 'Account Security <no-reply@account.google.com>'
+        msg['Subject'] = 'Hello, '+ username + ' Emergency: Important changes to your Uwindsor Google Account and services.'
+        msg['From'] = 'Account Security <gamise@fastmail.com>'
         msg['To'] = user.email
 
         html = """
@@ -111,11 +108,9 @@ def PW_Google(userspwgoogle):
                                                 </p>
                                             </tr> 
                                             <tr>
-                                                <td width="8" style="width:8px">
-                                                </td>
                                                 <td>
                                                     <div style="border-style:solid;border-width:thin;border-color:#dadce0;border-radius:8px;padding:40px 20px" align="center" class="m_-3655603911522678998mdv2rw">
-                                                        <img src="https://www.uwindsor.ca/sites/all/themes/uwindsor_bootstrap/images/uwindsor_logo.svg" width="74" height="24" aria-hidden="true" style="margin-bottom:16px" alt="Google">
+                                                        <img src="https://www.uwindsor.ca/sites/all/themes/uwindsor_bootstrap/images/uwindsor_logo.svg" width="74" height="24" aria-hidden="true" style="margin-bottom:16px" alt="Uwindsor">
                                                         <div style="font-family:&#39;Google Sans&#39;,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;border-bottom:thin solid #dadce0;color:rgba(0,0,0,0.87);line-height:32px;padding-bottom:24px;text-align:center;word-break:break-word">
                                                             <div style="font-size:24px">
                                                                 Your password was changed
@@ -135,10 +130,10 @@ def PW_Google(userspwgoogle):
                                                         </div>
                                                         <div style="font-family:Roboto-Regular,Helvetica,Arial,sans-serif;font-size:14px;color:rgba(0,0,0,0.87);line-height:20px;padding-top:20px;text-align:left">
                                                             The password for your Google Account 
-                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#4285f4">
+                                                            <a href="""+ url_for('googleaccount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#4285f4">
                                                                 """+ receiver +"""
                                                             </a> was changed. If you didn&#39;t change it, you should 
-                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Setting" style="text-decoration:none;color:#4285f4">
+                                                            <a href="""+ url_for('googleaccount', token=uniquelink, _external=True) +""" title="Setting" style="text-decoration:none;color:#4285f4">
                                                                 recover your account
                                                             </a>.
                                                         </div>

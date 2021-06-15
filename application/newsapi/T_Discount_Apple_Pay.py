@@ -5,13 +5,10 @@ from smtplib import SMTPException
 from smtplib import SMTP_SSL as SMTP
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from email.message import EmailMessage
-from application.model import User, Phishingresult, Phishingcampaign
+from application.model import Phishingresult, Phishingcampaign
 from application.forms import SimulationForm
 from application import routes
 from application import db
-import random
-import webbrowser
 
 def Discount_Apple(usersapple):
     EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
@@ -19,15 +16,15 @@ def Discount_Apple(usersapple):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in usersapple:
-        sender = 'Apple Pay <no-reply@mail.apple.com>'
+        sender = 'Apple Pay <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
         uniquelink = routes.createphish_token(user)
 
         msg = MIMEMultipart("alternative")
-        msg['Subject'] = 'Take $10 off your next delivery with DooorDash.'
-        msg['From'] = 'Apple Pay <no-reply@mail.apple.com>'
+        msg['Subject'] = 'Take 10 dollars off delivery with DooorDash.'
+        msg['From'] = 'Apple Pay <gamise@fastmail.com>'
         msg['To'] = user.email
 
         html = """
@@ -103,7 +100,7 @@ def Discount_Apple(usersapple):
                                                                             <tbody>
                                                                                 <tr>
                                                                                     <td align="center" valign="middle" height="70" style="vertical-align:middle">
-                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none">
+                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none">
                                                                                             <img src="https://www.apple.com/v/apple-pay/m/images/shared/hero_logo__eo41ol524ga6_large.png" alt="Apple Pay" title="Apple Pay" width="115" height="45" border="0" style="display:block;">
                                                                                         </a>
                                                                                     </td>
@@ -118,7 +115,7 @@ def Discount_Apple(usersapple):
                                                                                         </table>
                                                                                     </td>
                                                                                     <td align="center" valign="middle" style="padding-left:10px;vertical-align:middle">
-                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""">
+                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""">
                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/5hj4geTkkgHYYJTK4BWodh/cf869761c737536afe6489f1965335cf/doordash_logo.png" alt="DoorDash" title="DoorDash" width="140" height="50" border="0" style="display:block;">
                                                                                         </a>
                                                                                     </td>
@@ -152,7 +149,7 @@ def Discount_Apple(usersapple):
                                                                                 <tr>
                                                                                     <td align="center" style="font-family:Helvetica,Tahoma,sans-serif;font-size:14px;line-height:60px;font-weight:bold;columns: #000000;;padding:20px 0px 0px">
                                                                                         <div style="text-align:center;line-height:60px">
-                                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="display:inline-block;width:250px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:18px;font-weight:bold;color:#ffffff;line-height:50px;text-align:center;text-decoration:none;background-color:#0070ba;border-radius:50px" title="Order Now">Order Now</a>
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="display:inline-block;width:250px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:18px;font-weight:bold;color:#ffffff;line-height:50px;text-align:center;text-decoration:none;background-color:#0070ba;border-radius:50px" title="Order Now">Order Now</a>
                                                                                         </div>
                                                                                     </td>
                                                                                 </tr>
@@ -162,7 +159,7 @@ def Discount_Apple(usersapple):
                                                                 </tr>
                                                                 <tr>
                                                                     <td align="center" valign="middle" style="padding:30px 30px 30px 30px;text-align:center;">
-                                                                        <p style="font-size:13px;line-height:1.5;color:#000000; margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;">Limited offer of 4000 rewards available. Expires 06/01/21. Exclusions apply. <span><a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;color:rgb(255,255,255);font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">See offer terms below</a>.</span><span style="display:none">See offer terms below.</span></p>
+                                                                        <p style="font-size:13px;line-height:1.5;color:#000000; margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;">Limited offer of 4000 rewards available. Expires 06/01/21. Exclusions apply. <span><a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:underline;color:rgb(255,255,255);font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif" title="Order Now">See offer terms below</a>.</span><span style="display:none">See offer terms below.</span></p>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -171,7 +168,7 @@ def Discount_Apple(usersapple):
                                                 </tr>
                                                 <tr>
                                                     <td align="center" valign="middle" bgcolor="#009cde" style="color:rgb(0,156,222)">
-                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""">
+                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Order Now">
                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/5R6Lq1jcsLMYtldMFq9gbf/b0c1e503cc4aaa2b630531d2aebf6558/PP_DOORDASH_BELT_003.gif?w=1280&amp;q=80" alt="Take $10 off your next delivery with DoorDash." width="640" height="auto" border="0" style="display:block;text-align:center;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:18px;color:#000000" title="Take $10 off your next delivery with DoorDash.">
                                                         </a>
                                                     </td>
@@ -220,7 +217,7 @@ def Discount_Apple(usersapple):
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td align="left" valign="middle" style="padding:0px 0px 10px 0px">
-                                                                                                        <p style="margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:16px;line-height:1.5;color:#6c7378">Order by 06/01/21 through <a hhref="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="doordash" style="font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif;text-decoration:underline;color:rgb(51,122,183)">DoorDash</a>.
+                                                                                                        <p style="margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:16px;line-height:1.5;color:#6c7378">Order by 06/01/21 through <a hhref="""+ url_for('disount', token=uniquelink, _external=True) +""" title="doordash" style="font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif;text-decoration:underline;color:rgb(51,122,183)">DoorDash</a>.
                                                                                                         </p>
                                                                                                     </td>
                                                                                                 </tr>
@@ -379,17 +376,17 @@ def Discount_Apple(usersapple):
                                                                                             <tbody>
                                                                                                 <tr>
                                                                                                     <td align="center" valign="middle">
-                                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Facebook">
+                                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Facebook">
                                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/1e1NIwIzTYaicUMqKV7eqf/eda4183269ab4b803f9e7fe61f57bbe7/fb.png" alt="Facebook" width="40" height="40" border="0" style="display:block;" title="Facebook">
                                                                                                         </a>
                                                                                                     </td>
                                                                                                     <td align="center" valign="middle">
-                                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Twitter">
+                                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Twitter">
                                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/79B7K3pQth0QZM95LrE4lI/0b63ee526bee9ad6ee9f89f0ddeb1785/twitter.png" alt="Twitter" width="40" height="40" border="0" style="display:block;">
                                                                                                         </a>
                                                                                                     </td>
                                                                                                     <td align="center" valign="middle">
-                                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Instagram">
+                                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Instagram">
                                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/5WZHOOAbG3gX4WtbqC3H2i/dec7ee347f25df0257bbaceed10a346a/insta.png" alt="Instagram" width="40" height="40" border="0" style="display:block;">
                                                                                                         </a>
                                                                                                     </td>
@@ -408,7 +405,7 @@ def Discount_Apple(usersapple):
                                                                                                             <tbody>
                                                                                                                 <tr>
                                                                                                                     <td align="center" valign="middle" style="padding-top:20px;padding-bottom:20px;padding-left:10px;padding-right:10px;background-color:inherit">
-                                                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Download on the App Store">
+                                                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Download on the App Store">
                                                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/6YJOyJDkuDLtfnKuD0jIRs/a55299cdc15150064703229a6db53a09/english_apple_store_badge.png" alt="Download on the App Store" height="40" border="0" style="display:block;">
                                                                                                                         </a>
                                                                                                                     </td>
@@ -419,7 +416,7 @@ def Discount_Apple(usersapple):
                                                                                                             <tbody>
                                                                                                                 <tr>
                                                                                                                     <td align="center" valign="middle" style="padding-top:20px;padding-bottom:20px;padding-left:10px;padding-right:10px;background-color:inherit">
-                                                                                                                        <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Get it on Google Play">
+                                                                                                                        <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" title="Get it on Google Play">
                                                                                                                             <img src="https://images.ctfassets.net/7rifqg28wcbd/45zulEItNtk29JYZJgFlZ7/537970be2be551f7fe88136e70a87b56/english_Google_Play_badge.png" alt="Get it on Google Play" height="40" border="0" style="display:block;">
                                                                                                                         </a>
                                                                                                                     </td>
@@ -434,25 +431,25 @@ def Discount_Apple(usersapple):
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td align="center" valign="middle" style="font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:15px;line-height:150%;color:#6c7378;padding-top:20px;padding-bottom:20px;border-bottom:solid 1px #dddddd;white-space:nowrap">
-                                                                                        <a title="Account" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378">
+                                                                                        <a title="Account" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378" title="Account">
                                                                                             <strong style="font-weight:bold">Account</strong>
                                                                                         </a>
                                                                                         <span> </span>
-                                                                                        <a title="Help" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378">
+                                                                                        <a title="Help" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378" title="Help">
                                                                                             <strong style="font-weight:bold">Help</strong>
                                                                                         </a>
                                                                                         <span> </span>
-                                                                                        <a title="Fees" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378">
+                                                                                        <a title="Fees" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378" title="Fees">
                                                                                             <strong style="font-weight:bold">Fees</strong>
                                                                                         </a>
                                                                                         <span> </span>
-                                                                                        <a title="Security" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378">
+                                                                                        <a title="Security" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378" title="Security">
                                                                                             <strong style="font-weight:bold">Security</strong>
                                                                                         </a><span> </span>
-                                                                                        <a title="App" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378">
+                                                                                        <a title="App" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378" title="App">
                                                                                             <strong style="font-weight:bold">App</strong>
                                                                                         </a><span> </span>
-                                                                                        <a title="Shop" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378;white-space:nowrap">
+                                                                                        <a title="Shop" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="text-decoration:none;color:#6c7378;white-space:nowrap" title="Shop">
                                                                                             <strong style="font-weight:bold">Shop</strong>
                                                                                         </a>
                                                                                     </td>
@@ -460,13 +457,13 @@ def Discount_Apple(usersapple):
                                                                                 <tr>
                                                                                     <td align="left" valign="middle" style="padding:20px 0px 0px">
                                                                                         <div style="margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:13px;line-height:150%;color:#6c7378">
-                                                                                            <a name="m_591092369271924123_m_4435424273711280593_terms" href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif;text-decoration:underline;color:rgb(51,122,183)">
+                                                                                            <a name="m_591092369271924123_m_4435424273711280593_terms" href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif;text-decoration:underline;color:rgb(51,122,183)">
                                                                                             </a>
                                                                                             <b>“Eligible Participant”:</b> Open only to residents of Canada who: (1) are eighteen (18) years of age or older; and (2) are holders of a Canadian Apple Pay account in good standing (“Valid Account”) and (3) receive an authorized email containing the invitation to participate in the offer (eligibility for/those who receive such an email will be determined solely by Apple Pay). 
                                                                                             <br><br>
                                                                                             <b>“Eligible Purchase(s)”:</b> Purchases made at DoorDash in CAD using a Valid Account. Eligible Purchases do not include: (1) send/receive money transactions (including those marked as a “Goods and Services” payments), (2) charitable donations, (3) purchases made using Apple Pay.me; (4) Visa Debit or credit card purchases made using the card directly and not through your Apple Pay account, and (5) Apple Pay transaction fees. 
                                                                                             <br><br>
-                                                                                            <b>“Offer Period”:</b> Starts at 12:01 a.m Eastern Time (“ET”) on February 5, 2021 and ends at 11:50 p.m ET on June 1, 2021. 
+                                                                                            <b>“Offer Period”:</b> Starts at 12:01 a.m Eastern Time (“ET”) on February 5, 2021 and ends at 11:50 p.m ET on June 30, 2021. 
                                                                                             <br><br>
                                                                                             <b>“Reward”:</b> $10 CAD voucher that will be viewable in the “Offers” section of the Eligible Participant’s Apple Pay account for personal or premier accounts. For business accounts, the Reward will only be visible during checkout and on the purchase transaction receipt(s). <b>Only 4000 Rewards are available during the Offer Period; Rewards will no longer be awarded once the limit is reached.</b> 
                                                                                             <br><br>
@@ -492,19 +489,19 @@ def Discount_Apple(usersapple):
                                                                                 <tr>
                                                                                     <td align="left" valign="middle" style="padding:20px 0px 0px 0px">
                                                                                         <div style="margin:0px;font-family:&#39;pp-sans-small-regular&#39;,Tahoma,Arial,sans-serif;font-size:13px;line-height:150%;color:#6c7378">This email was sent to  
-                                                                                            <a href="mailto:"""+ receiver +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">"""+ receiver +"""
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">"""+ receiver +"""
                                                                                             </a>  , because your email preferences are set to receive &#39;News and Promotions&#39;. Click here to 
-                                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">Unsubscribe
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">Unsubscribe
                                                                                             </a>.
                                                                                             <br><br>To manage your communication preferences, please visit our 
-                                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">preference centre
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">preference centre
                                                                                             </a>.
                                                                                             <br><br>Please do not reply to this email. We are unable to respond to inquiries sent to this address. For immediate answers to your questions, visit our Help Centre by clicking &#39;Help&#39; located on any Apple Pay page or email.
                                                                                             <br><br>Apple Pay is committed to your privacy, learn more about our 
-                                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">privacy policy
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">privacy policy
                                                                                             </a>.
                                                                                             <br><br>Copyright © 2020 
-                                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">661 University Ave, Toronto, ON M5G 1M1
+                                                                                            <a href="""+ url_for('disount', token=uniquelink, _external=True) +""" style="color:rgb(0,156,222);text-decoration:underline;font-family:pp-sans-small-regular,Tahoma,Arial,sans-serif">661 University Ave, Toronto, ON M5G 1M1
                                                                                             </a>. All rights reserved.
                                                                                         </div>
                                                                                     </td>

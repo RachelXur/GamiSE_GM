@@ -18,15 +18,15 @@ def tablet_TD(userstd):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in userstd:
-        sender = 'TD <email@e.email-td.com>'
+        sender = 'TD <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
         uniquelink = routes.createphish_token(user)
 
-        msg = MIMEMultipart("alternative")
-        msg['Subject'] = 'TD - Chance to get a Tabllet!'
-        msg['From'] = 'TD <email@e.email-td.com>'
+        msg = MIMEMultipart("mixed")
+        msg['Subject'] = 'TD - Limited Time, Chance to get a Tabllet'
+        msg['From'] = 'TD <gamise@fastmail.com>'
         msg['To'] = user.email
 
         html = """
@@ -152,7 +152,7 @@ def tablet_TD(userstd):
                                                                 <p>When you open an eligible TD bank account.
                                                                 </p>
                                                                 <p>
-                                                                    Offer ends June 1, 2021. Conditions apply.
+                                                                    Offer ends June 30, 2021. Conditions apply.
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -201,9 +201,9 @@ def tablet_TD(userstd):
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 Open an eligible TD bank account by 
                                                                                 <Strong>
-                                                                                    June 1, 2021
+                                                                                    June 30, 2021
                                                                                 </Strong><br>
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195); text-decoration:none">
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195); text-decoration:none" title="TD chance to get a tablet">
                                                                                     <strong style="font-family:Roboto,Arial,sans-serif;color:#008a00;">> Get Started</strong>
                                                                                 </a> 
                                                                             </td>
@@ -217,8 +217,8 @@ def tablet_TD(userstd):
                                                                                 <strong>2</strong>
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px;">
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);text-decoration:none" >
-                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 1, 2021:</strong>
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);text-decoration:none" title="TD chance to get a tablet">
+                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 30, 2021:</strong>
                                                                                 </a>
                                                                                 <li style="color: #008a00;">
                                                                                     <span style="color:rgb(0, 0, 0)">
@@ -243,7 +243,7 @@ def tablet_TD(userstd):
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 We’ll send you an email shortly after you qualify with instructions on how to order your 
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:#008a00;text-decoration:none">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:#008a00;text-decoration:none" title="TD chance to get a tablet">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -285,21 +285,21 @@ def tablet_TD(userstd):
                                                                                                                             </td>
                                                                                                                             <td valign="middle" style="border-collapse:collapse;border-collapse:collapse;color:#ffffff;font-size:16px;font-family:Arial,Helvetica,sans-serif;text-align:left;padding-right:55px;padding-left: 20px;">
                                                                                                                                 <span style="white-space:nowrap">
-                                                                                                                                    <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline">
+                                                                                                                                    <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline" title="Contact Us">
                                                                                                                                         Contact Us
                                                                                                                                     </a> 
                                                                                                                                     <span> </span>
                                                                                                                                     |<span> </span>
                                                                                                                                 </span>
                                                                                                                                 <span style="white-space:nowrap">
-                                                                                                                                    <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline">
+                                                                                                                                    <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline" title="Privacy and Security">
                                                                                                                                         Privacy and Security
                                                                                                                                     </a> 
                                                                                                                                     <span> </span>
                                                                                                                                     |
                                                                                                                                     <span> </span>
                                                                                                                                 </span>
-                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline">
+                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;color:#ffffff;text-decoration:underline" title="Legal">
                                                                                                                                     Legal
                                                                                                                                 </a>
                                                                                                                             </td>
@@ -370,7 +370,7 @@ def tablet_TD(userstd):
                                                                                                     Toronto, Ontario<br>
                                                                                                     M5K 1A2
                                                                                                 </a><br>
-                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;text-decoration:underline;color:#1a5336">
+                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="color:inherit;text-decoration:underline;color:#1a5336" title="TD">
                                                                                                     td.com
                                                                                                 </a><br><br><br>
                                                                                             </td>

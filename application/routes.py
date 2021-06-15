@@ -6,7 +6,7 @@ from application.forms import UserReportForm, ITReportForm, ITCheckForm, Simulat
 from application.newsapi.news import NewsofCA
 from application.newsapi.newsinterests import NewsofInterest
 from application.model import User, Post, Userreport, Itreport, Ituser, Phishingcampaign, Phishingresult, LikePostRecord, DislikePostRecord, Withdrawal, Photo, Emailchangerecord
-from application.model import Pointrules, Achievementrules, Badgerules, Rewardrules, Userpoints, Userachievements, Userbadges, Userrewards, Phishinglinkrecord
+from application.model import Pointrules, Achievementrules, Badgerules, Rewardrules, Userpoints, Userachievements, Userbadges, Userrewards, Phishinglinkrecord, Deleteuserreport
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets, sys, os
 from PIL import Image
@@ -79,7 +79,7 @@ def login():
     token = request.args.get('token')
     if form.validate_on_submit():
         #check user with db
-        user = User.query.filter_by(email=form.email.data).first()
+        user = User.query.filter(User.email.ilike(form.email.data)).first()
         if user:
             if user.confirm == True:
                 if user and bcrypt.check_password_hash(user.password, form.password.data):
@@ -145,7 +145,7 @@ def register():
                 db.session.add(user)
                 db.session.commit()
                 registerconfirm(user)
-                flash(f'Please confirm your registration {form.username.data}!', 'warning')
+                flash(f'Please verify your email address {form.username.data}!', 'warning')
                 return redirect(url_for('login'))
             else:
                 flash('IT code is incorrect, please check it again!', 'danger')
@@ -163,7 +163,7 @@ def register():
             register_achievement()
             register_badge()
             registerconfirm(user)
-            flash(f'Please confirm your registration {form.username.data}!', 'warning')
+            flash(f'Please verify your email address {form.username.data}!', 'warning')
             return redirect(url_for('login'))
     return render_template('user/register.html', title='Register', form=form)
 
@@ -224,7 +224,7 @@ def pexperience(token):
             logout_user()
             return redirect(url_for('pexperience', token=token))
         else:
-            return redirect(url_for('userreport'))
+            return redirect(url_for('pexperience'))
     else:
         usercount = User.query.filter_by(id = current_user.id).first()
         if form.validate_on_submit():
@@ -439,7 +439,8 @@ def account():
         db.session.add(record)
         db.session.commit()
         notechangeprofile(current_user)
-        notechangeprofileold(current_user, useremailsave)
+        if useremailsave != form.email.data:
+            notechangeprofileold(current_user, useremailsave)
         flash('Account info updated', 'success')
         return redirect(url_for('account'))
     elif request.method == 'GET':
@@ -592,7 +593,7 @@ def userreport(token):
                     db.session.commit()
                     report_point()
                     point_achievement()
-                    now = userreport.post_date
+                    now = userreport.report_date
                     if form.reportstatus.data == "No":
                         flash(f"Successful Submit {now.strftime('%Y-%m-%d %H:%M')}. Please remember to forward the phishing email to IT department!", 'warning')
                         return redirect(url_for('homepage'))
@@ -723,7 +724,7 @@ def withdrawal(token):
         if form.validate_on_submit() and form.qd.data == "Yes":
             user = User.verify_emailtoken(token)
             if user:
-                withdrawal = Withdrawal(qa=form.qa.data, qb=form.qb.data, qc=form.qc.data, qd=form.qd.data, reason=form.reason.data, user_id=user.id, username=user.username, email=user.email)
+                withdrawal = Withdrawal(qa=form.qa.data, qb=form.qb.data, qc=form.qc.data, qd=form.qd.data, reason=form.reason.data, user_id=user.id, username=user.username, email=user.email, report_count=user.report_count, post_count=user.report_count)
                 db.session.add(withdrawal)
                 db.session.commit()
                 # Delete all the information from database
@@ -790,6 +791,11 @@ def withdrawal(token):
                     for post in userpost:
                         db.session.delete(post)
                         db.session.commit()
+                deleteuserreport = Deleteuserreport.query.filter_by(user_id=user.id).all()
+                if deleteuserreport:
+                    for report in deleteuserreport:
+                        db.session.delete(report)
+                        db.session.commit()
                 if user:
                     db.session.delete(user)
                     db.session.commit()
@@ -833,7 +839,7 @@ def rattack(token):
             logout_user()
             return redirect(url_for('rattack', token=token))
         else:
-            return redirect(url_for('userreport'))
+            return redirect(url_for('rattack'))
     else:
         if current_user.position == 'IT':
             return render_template("user/submit_a_solution.html")
@@ -853,7 +859,7 @@ def itreport():
             itreport = Itreport(subject=form.subject.data, senderemail=form.senderemail.data, reason=form.reason.data, solution=form.solution.data, user=current_user)
             db.session.add(itreport)
             db.session.commit()
-            now = itreport.post_date
+            now = itreport.report_date
             flash(f"Successfully Submit {now.strftime('%Y-%m-%d %H:%M')}", 'success')
             return redirect(url_for('rattack'))
         else:
@@ -896,6 +902,9 @@ def read_report(pid):
         # set read = True then will not show on the check report page
         report.read=True
         db.session.commit()
+        userreportcount = User.query.filter_by(id=report.user_id).first()
+        userreportcount.report_count = userreportcount.report_count + 1
+        db.session.commit()
         report_achievement(pid)
         flash("Read Success!", "success")
         return redirect(url_for('checkuserreport'))
@@ -911,6 +920,9 @@ def delete_report(pid):
     report = Userreport.query.filter_by(report_id=pid).first()
     # verify user&post
     if current_user.position == 'IT':
+        deletereport = Deleteuserreport(subject=report.subject, senderemail=report.senderemail, reason=report.reason, riskaction=report.riskaction, reportstatus=report.reportstatus, report_date=report.report_date, user_id=report.user_id)
+        db.session.add(deletereport)
+        db.session.commit()
         deleteuserreport_point(pid)
         db.session.delete(report)
         db.session.commit()
@@ -942,7 +954,7 @@ def itreportchange_update(pid):
             itreport.solution = form.solution.data
             itreport.report_date = datetime.now()
             db.session.commit()
-            now = itreport.post_date
+            now = itreport.report_date
             flash(f"IT solution Updated {now.strftime('%Y-%m-%d %H:%M')}", 'success')
             return redirect(url_for('itreportchange', pid=pid))
         else:
@@ -993,16 +1005,20 @@ def news():
             if form.receiver.data == "Normal Users":
                 if form.image_url.data == "":
                     dailyemailnews_noimage()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
                 else:
                     dailyemailnews()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
             else:
                 if form.image_url.data == "":
                     dailyemailnews_IT_noimage()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
                 else:
                     dailyemailnews_IT()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
         else:
             return render_template("admin/daily/dailyNews.html", title='DailyEmailNews', form=form)
@@ -1022,16 +1038,20 @@ def tips():
             if form.receiver.data == "Normal Users":
                 if form.image_url.data == "":
                     dailyemailtips()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
                 else:
                     dailyemailtipsimage()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
             else:
                 if form.image_url.data == "":
                     dailyemailtips_IT()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
                 else:
                     dailyemailtipsimage_IT()
+                    flash('Email Sent', 'success')
                     return redirect(url_for('daily'))
         else:
             return render_template("admin/daily/dailyTips.html", title='DailyEmailTips', form=form)
@@ -1164,6 +1184,33 @@ def check_phishlink(token):
         return render_template('user/phishing_notification.html',token=token)
     return render_template('user/phishing_notification.html',token=token)
 
+
+@app.route('/dissount/<token>', methods=['GET', 'POST'])
+def disount(token):
+    token = token
+    return redirect(url_for('check_phishlink', token=token))
+
+@app.route('/goooglenews/<token>', methods=['GET', 'POST'])
+def googlenews(token):
+    token = token
+    return redirect(url_for('check_phishlink', token=token))
+
+@app.route('/trendingnews/<token>', methods=['GET', 'POST'])
+def trendingnews(token):
+    token = token
+    return redirect(url_for('check_phishlink', token=token))
+
+@app.route('/gooogleaccount/<token>', methods=['GET', 'POST'])
+def googleaccount(token):
+    token = token
+    return redirect(url_for('check_phishlink', token=token))
+
+@app.route('/acccountsecurity/<token>', methods=['GET', 'POST'])
+def acccountsecurity(token):
+    token = token
+    return redirect(url_for('check_phishlink', token=token))
+
+
 # Every time when admin check the result, it will run the Click function first.
 # Click function is aim to find the match uniquelink num and change the phish_click and phish_open in the database to TRUE
 # Next, show it on the platform.
@@ -1172,7 +1219,7 @@ def check_phishlink(token):
 def result():
     if current_user.position == 'Admin':
         resultdict = {}
-        campaigns = Phishingcampaign.query.all()
+        campaigns = Phishingcampaign.query.order_by(desc(Phishingcampaign.campaign_date)).all()
         reportnum = Userreport.query.filter_by(read=True).count()
         for campaign in campaigns:
             campaign_id = campaign.campaign_id
@@ -1229,7 +1276,8 @@ def adminaccount():
             db.session.add(record)
             db.session.commit()
             notechangeprofile(current_user)
-            notechangeprofileold(current_user, useremailsave)
+            if useremailsave != form.email.data:
+                notechangeprofileold(current_user, useremailsave)
             flash('Account info updated', 'success')
             return redirect(url_for('adminaccount'))
         elif request.method == 'GET':
@@ -1606,13 +1654,18 @@ def check_user():
         form = CheckuserForm()
         if form.validate_on_submit():
             user = User.query.filter_by(email=form.email.data).first()
-            return render_template('admin/admin_check_user.html', user=user, pid=user.id)
+            if user:
+                return render_template('admin/admin_check_user.html', user=user, pid=user.id)
+            else:
+                flash('User does nor exist!', 'danger')
+                return redirect(url_for('check_user'))
         else:
             return render_template('admin/admin_check_user.html', form=form, user=None)
     else:
         return redirect(url_for('homepage'))
 
-# delete user information
+# delete user information. If admin delete this user. This user's information will not be stored in Withdrawal table. Because admin only delete user for some specific reason
+# Such as user's account has been stolen, user did not confirm their email address. User's email address is wrong.
 @app.route('/admin/user_information_delete/<int:pid>', methods=['GET', 'POST'])
 def userinformation_delete(pid):
     # Find all the information about this user
@@ -1686,6 +1739,11 @@ def userinformation_delete(pid):
         if userpost:
             for post in userpost:
                 db.session.delete(post)
+                db.session.commit()
+        deleteuserreport = Deleteuserreport.query.filter_by(user_id=user.id).all()
+        if deleteuserreport:
+            for report in deleteuserreport:
+                db.session.delete(report)
                 db.session.commit()
         if user:
             db.session.delete(user)

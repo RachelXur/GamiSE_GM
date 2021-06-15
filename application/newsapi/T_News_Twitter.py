@@ -57,7 +57,7 @@ def Twitternews(userstwitter):
         inname = inname[0]["name"]
 
         # send email
-        sender = 'Daily News <personal@fastmail.com>'
+        sender = 'Daily News <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
@@ -65,7 +65,7 @@ def Twitternews(userstwitter):
 
         msg = MIMEMultipart("alternative")
         msg['Subject'] = 'Hi, ' + username + '. Check Daily News'
-        msg['From'] = 'Daily News <personal@fastmail.com>'
+        msg['From'] = 'Daily News <gamise@fastmail.com>'
         msg['To'] = user.email
 
 
@@ -107,7 +107,7 @@ def Twitternews(userstwitter):
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style="padding: 0px;border: 1px solid #aab8c2;background-color: #ffffff;border-radius: 4px">
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Twitterr">
+                                                                            <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Twitterr">
                                                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 0px">
                                                                                     <tbody>
                                                                                         <tr>
@@ -163,9 +163,9 @@ def Twitternews(userstwitter):
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
-                                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Twitterr"
+                                                                                                                                                <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Twitterr"
                                                                                                                                                     style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffad1f;text-decoration:none;border-radius:100px;padding:5px 18px;border:1px solid #ffad1f;display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                    Read more at Twitterr 
+                                                                                                                                                    Read more at Twitter
                                                                                                                                                 </a>
                                                                                                                                             </td>
                                                                                                                                         </tr>
@@ -203,7 +203,7 @@ def Twitternews(userstwitter):
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style="padding: 0px;border: 1px solid #aab8c2;background-color: #ffffff;border-radius: 4px">
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Twitterr">
+                                                                            <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Twitterr">
                                                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 0px">
                                                                                     <tbody>
                                                                                         <tr>
@@ -253,9 +253,9 @@ def Twitternews(userstwitter):
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
-                                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Twitterr"
+                                                                                                                                                <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Twitterr"
                                                                                                                                                     style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffad1f;text-decoration:none;border-radius:100px;padding:5px 18px;border:1px solid #ffad1f;display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                    Read more at Twitterr 
+                                                                                                                                                    Read more at Twitter 
                                                                                                                                                 </a>
                                                                                                                                             </td>
                                                                                                                                         </tr>
@@ -291,7 +291,7 @@ def Twitternews(userstwitter):
                                                     </tr>
                                                     <tr>
                                                         <td style="padding:0px;margin:0px auto;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:12px;padding:0px;margin:0px;font-weight:normal;line-height:16px;text-align:center;margin:auto;color:#8899a6" align="center">
-                                                            Twitterr, Inc. 1355 Market Street, Suite 900 San Francisco, CA 94103.
+                                                            Twitter, Inc. 1355 Market Street, Suite 900 San Francisco, CA 94103.
                                                         </td>
                                                     </tr>
                                                 </tbody>

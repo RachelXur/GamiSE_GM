@@ -16,7 +16,7 @@ def tablet_RBC(usersrbc):
     form = SimulationForm()
     campaign = Phishingcampaign.query.filter_by(campaign_name=form.campaign_name.data).first()
     for user in usersrbc:
-        sender = 'RBC <rbcroyalbank@offers.rbc.com>'
+        sender = 'RBC <gamise@fastmail.com>'
         receiver = [user.email]
         username = user.username
         #randomly create a token
@@ -25,8 +25,8 @@ def tablet_RBC(usersrbc):
         EMAIL_USERFASTMAIL = os.environ.get('EMAIL_USERFASTMAIL')
         EMAIL_PASSWORDFASTMAIL = os.environ.get('EMAIL_PASSWORDFASTMAIL')
         msg = MIMEMultipart("alternative")
-        msg['Subject'] = 'RBC - Chance to get a Tabllet!'
-        msg['From'] = 'RBC <rbcroyalbank@offers.rbc.com>'
+        msg['Subject'] = 'RBC - Limited Time, Chance to get a Tabllet!'
+        msg['From'] = 'RBC <gamise@fastmail.com>'
         msg['To'] = user.email
 
         html = """
@@ -150,7 +150,7 @@ def tablet_RBC(usersrbc):
                                                                 <p>When you open an eligible RBC bank account.
                                                                 </p>
                                                                 <p>
-                                                                    Offer ends June 1, 2021. Conditions apply.
+                                                                    Offer ends June 30, 2021. Conditions apply.
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -199,10 +199,10 @@ def tablet_RBC(usersrbc):
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 Open an eligible RBC bank account by 
                                                                                 <Strong>
-                                                                                    December 18, 2020
+                                                                                    December 18, 2021
                                                                                 </Strong><br>
-                                                                                <a hhref="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)">
-                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);">> Get Started</strong>
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)" title="RBC chance to get a tablet">
+                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195);"> > Get Started</strong>
                                                                                 </a> 
                                                                             </td>
                                                                         </tr>
@@ -215,8 +215,8 @@ def tablet_RBC(usersrbc):
                                                                                 <img src="https://www.rbcroyalbank.com/dms/pba/open-an-account/_assets-custom/images/2-transparent.png" alt="2" style="width: 30px !important;">
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)">
-                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 1, 2021:</strong>
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)" title="RBC chance to get a tablet">
+                                                                                    <strong style="font-family:Roboto,Arial,sans-serif;color:rgb(0, 0, 0)">Set up and complete two of the following by June 30, 2021:</strong>
                                                                                 </a>
                                                                                 <li style="color: rgb(0,106,195);">
                                                                                     <span style="color:rgb(0, 0, 0)">
@@ -241,7 +241,7 @@ def tablet_RBC(usersrbc):
                                                                             </td>
                                                                             <td valign="top" style="font-family:Roboto,Arial,sans-serif;font-size:16px;line-height:24px">
                                                                                 We’ll send you an email shortly after you qualify with instructions on how to order your 
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Roboto,Arial,sans-serif;color:rgb(0,106,195)" title="RBC chance to get a tablet">10.2”  iPad Wi-Fi 32GB (8th Generation)</a>. 
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>
@@ -339,15 +339,15 @@ def tablet_RBC(usersrbc):
                                                                     <tbody>
                                                                         <tr>
                                                                             <td style="border-top-width:1px;border-top-style:solid;padding:15px 20px;border-bottom-width:1px;border-bottom-style:solid;text-align:left;font-size:12px;font-family:Arial,sans-serif,Roboto;line-height:18px;border-top-color:rgb(153,153,153);border-bottom-color:rgb(153,153,153);color:rgb(0,106,195)">
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)">
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)" title="Privacy &amp; Security">
                                                                                     Privacy &amp; Security
                                                                                 </a> 
                                                                                 | 
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)">
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)" title="Legal">
                                                                                     Legal
                                                                                 </a> 
                                                                                 | 
-                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)">
+                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="text-decoration:underline;font-family:Arial,sans-serif,Roboto;color:rgb(0,106,195)" title="Unsubscribe">
                                                                                     Unsubscribe
                                                                                 </a>
                                                                             </td>
@@ -407,7 +407,7 @@ def tablet_RBC(usersrbc):
                                                                                 ©
                                                                             </td>
                                                                             <td valign="top" style="text-align:left;padding-right:20px;font-family:Arial,sans-serif;font-size:11px;line-height:16px;padding-bottom:6px;color:rgb(0,0,0)">
-                                                                                Royal Bank of Canada 2021 
+                                                                                Royal Bank of Canada 2019 
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
@@ -419,8 +419,8 @@ def tablet_RBC(usersrbc):
                                                                                     This offer is available to permanent Canadian residents without an existing Personal Banking Account with Royal Bank of Canada or any of its deposit taking subsidiaries at the beginning of the “Promotional Period” on May 21, 2021, 
                                                                                     or in the prior five year period, and otherwise comply with the terms of the offer. 
                                                                                     You will be eligible to receive a complimentary Apple iPad, when you open your first new Eligible Personal Banking Account of either an RBC Signature No Limit Banking® account (monthly fee of $15.95) or RBC VIP Banking® account (monthly fee of $30) 
-                                                                                    by 9PM EST September 3, 2021 and complete two of the following ”Qualifying Criteria” by 9PM EST June 1, 2021: set up two pre-authorized payments from the Eligible Personal Banking Account; and/or one automated and recurring payroll or pension direct deposit to the Eligible Personal Banking Account, 
-                                                                                    and/or two bill payments to a service provider from the Eligible Personal Banking Account. RBC has the right to determine what is considered payroll. To qualify you must be of the age of majority in the province or territory in which you reside by June 1, 2021. This offer may not be combined or used in conjunction with any other Personal Banking Account offers unless otherwise indicated. 
+                                                                                    by 9PM EST September 3, 2021 and complete two of the following ”Qualifying Criteria” by 9PM EST June 30, 2021: set up two pre-authorized payments from the Eligible Personal Banking Account; and/or one automated and recurring payroll or pension direct deposit to the Eligible Personal Banking Account, 
+                                                                                    and/or two bill payments to a service provider from the Eligible Personal Banking Account. RBC has the right to determine what is considered payroll. To qualify you must be of the age of majority in the province or territory in which you reside by June 30, 2021. This offer may not be combined or used in conjunction with any other Personal Banking Account offers unless otherwise indicated. 
                                                                                     Royal Bank of Canada reserves the right to withdraw this offer at any time without notice, even after acceptance by you. Other conditions apply. For full details including defined terms visit 
                                                                                     <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" style="font-family:Arial,sans-serif;color:rgb(0,0,0)">
                                                                                         <span style="font-family:Arial,sans-serif;color:rgb(0,0,0)">www.rbc.com/termsandconditions

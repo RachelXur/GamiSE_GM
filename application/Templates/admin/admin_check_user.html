@@ -107,13 +107,14 @@
                 <table class="table table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th class="text-left" colspan="4">User information</th>
+                            <th class="text-left" colspan="5">User information</th>
                         </tr>
                         <tr class="text-left">
                             <th>Name</th>
                             <th>Email</th>
                             <th>position</th>
                             <th>post_count</th>
+                            <th>report_count</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -122,6 +123,7 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.position }}</td>
                             <td>{{ user.post_count }}</td>
+                            <td>{{ user.report_count }}</td>
                         </tr> 
                     </tbody>
                 </table>

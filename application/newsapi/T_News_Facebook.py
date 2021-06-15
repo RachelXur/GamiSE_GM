@@ -57,7 +57,7 @@ def Facebooknews(usersfacebook):
         inname = inname[0]["name"]
 
         # send email
-        sender = 'Daily News <personal@fastmail.com>'
+        sender = 'Daily News <gamise@fastmail.com>'
         receiver = user.email
         username = user.username
         #randomly create a token
@@ -65,7 +65,7 @@ def Facebooknews(usersfacebook):
 
         msg = MIMEMultipart("alternative")
         msg['Subject'] = 'Hi, ' + username + '. Check Daily News'
-        msg['From'] = 'Daily News <personal@fastmail.com>'
+        msg['From'] = 'Daily News <gamise@fastmail.com>'
         msg['To'] = user.email
 
         html = """
@@ -109,7 +109,7 @@ def Facebooknews(usersfacebook):
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style="padding: 0px;border: 1px solid #aab8c2;background-color: #ffffff;border-radius: 4px">
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Faceboook">
+                                                                            <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Faceboook">
                                                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 0px">
                                                                                     <tbody>
                                                                                         <tr>
@@ -160,9 +160,9 @@ def Facebooknews(usersfacebook):
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
-                                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Faceboook"
+                                                                                                                                                <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Faceboook"
                                                                                                                                                     style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:2px;padding:5px 18px;border:1px solid #4c649b;background: #4c649b; display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                    Read more at Faceboook 
+                                                                                                                                                    Read more at Facebook 
                                                                                                                                                 </a>
                                                                                                                                         </tr>
                                                                                                                                     </tbody>
@@ -199,7 +199,7 @@ def Facebooknews(usersfacebook):
                                                                 <tbody>
                                                                     <tr>
                                                                         <td style="padding: 0px;border: 1px solid #aab8c2;background-color: #ffffff;border-radius: 4px">
-                                                                            <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Faceboook">
+                                                                            <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Faceboook">
                                                                                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="padding: 0px">
                                                                                     <tbody>
                                                                                         <tr>
@@ -249,9 +249,9 @@ def Facebooknews(usersfacebook):
                                                                                                                                     <tbody>
                                                                                                                                         <tr>
                                                                                                                                             <td align="center" valign="middle" style="padding: 0px;border-radius: 100px;line-height: 18px;">
-                                                                                                                                                <a href="""+ url_for('check_phishlink', token=uniquelink, _external=True) +""" title="Faceboook"
+                                                                                                                                                <a href="""+ url_for('trendingnews', token=uniquelink, _external=True) +""" title="Faceboook"
                                                                                                                                                     style="text-decoration:none;width:89%;min-width:86%;display:block;font-size:14px;font-family:Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:2px;padding:5px 18px;border:1px solid #4c649b;background: #4c649b; display:inline-block;font-weight:bold;white-space:nowrap">
-                                                                                                                                                    Read more at Faceboook 
+                                                                                                                                                    Read more at Facebook 
                                                                                                                                                 </a>
                                                                                                                                             </td>
                                                                                                                                         </tr>
@@ -283,7 +283,7 @@ def Facebooknews(usersfacebook):
                                                     <tr>
                                                         <td style="font-family:Helvetica Neue,Helvetica,Lucida Grande,tahoma,verdana,arial,sans-serif;font-size:11px;color:#aaaaaa;line-height:16px">
                                                             This message was sent to """+ receiver +""". If you don't want to receive these emails from Facebook in the future, please unsubscribe.
-                                                            Faceboook, Inc., Attention: Community Support, 1 Facebook Way, Menlo Park, CA 94025
+                                                            Facebook, Inc., Attention: Community Support, 1 Facebook Way, Menlo Park, CA 94025
                                                         </td>
                                                     </tr>
                                                 </tbody>

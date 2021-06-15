@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
     qj = db.Column(db.String(40), nullable=False)
     qk = db.Column(db.String(40), nullable=False)
     post_count = db.Column(db.Integer, default=0)
+    report_count = db.Column(db.Integer, default=0)
     confirm = db.Column(db.Boolean, nullable=False, default=False)
     posts = db.relationship('Post', backref='user', lazy=True)
     user_report = db.relationship('Userreport', backref='user', lazy=True)
@@ -151,6 +152,8 @@ class Withdrawal(db.Model):
     qb = db.Column(db.String(40), nullable=False)
     qc = db.Column(db.String(40), nullable=False)
     qd = db.Column(db.String(40), nullable=False)
+    post_count = db.Column(db.Integer, default=0)
+    report_count = db.Column(db.Integer, default=0)
     reason = db.Column(db.Text, nullable=False)
     user_id = db.Column(db.Integer, nullable=False)
     username = db.Column(db.String(20), nullable=False)
@@ -173,6 +176,22 @@ class Userreport(db.Model):
 
     def __repr__(self):
         return f"Userreport('{self.report_id}', '{self.subject}', '{self.senderemail}', '{self.reason}', '{self.riskaction}', '{self.reportstatus}', '{self.read}', '{self.report_date}', '{self.user_id}')"
+
+
+# save the user reports that deleted by IT. So when users ask why IT deleted their report. IT can check the reason.
+class Deleteuserreport(db.Model):
+    report_id = db.Column(db.Integer, primary_key=True)
+    subject = db.Column(db.String(200), nullable=False)
+    senderemail = db.Column(db.String(200), nullable=False)
+    reason = db.Column(db.Text, nullable=False)
+    riskaction = db.Column(db.Text, nullable=False)
+    reportstatus = db.Column(db.String(40), nullable=False)
+    report_date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Deleteuserreport('{self.report_id}', '{self.subject}', '{self.senderemail}', '{self.reason}', '{self.riskaction}', '{self.reportstatus}', '{self.report_date}', '{self.user_id}')"
+
 
 # IT department submit a solution
 class Itreport(db.Model):

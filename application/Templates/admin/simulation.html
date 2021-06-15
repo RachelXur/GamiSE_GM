@@ -24,7 +24,7 @@
                             {{ form.campaign_name(type="text") }}
                             <div class="form-control-feedback">
                                 {% for error in form.campaign_name.errors %}
-                                    <span> {{ error }} </span>
+                                    <span style="color: white;"> {{ error }} </span>
                                 {% endfor %}
                             </div>
                         {% else %}
