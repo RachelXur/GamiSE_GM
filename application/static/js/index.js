@@ -57,6 +57,7 @@ function like(pid, flag) {
                     unlike(pid, 1);
                 }
             }
+            window.location.href='/post/'+pid
         //}
     }
     xhr.send();
@@ -81,6 +82,7 @@ function unlike(pid, flag) {
                     like(pid, 1);
                 }
             }
+            window.location.href='/post/'+pid
         //}
     }
     xhr.send();

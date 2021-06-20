@@ -32,8 +32,8 @@ def post_achievement():
 
 # Like or not interested achievement - 3, 4
 def responsepost_achievement():
-    likerecord = Userpoints.query.filter(Userpoints.user_id == current_user.id, Userpoints.point_id == 2).count()
-    dislikerecord = Userpoints.query.filter(Userpoints.user_id == current_user.id, Userpoints.point_id == 3).count()
+    likerecord = Userpoints.query.filter(Userpoints.user_id == current_user.id, Userpoints.points_id == 2).count()
+    dislikerecord = Userpoints.query.filter(Userpoints.user_id == current_user.id, Userpoints.points_id == 3).count()
     recordcount = likerecord + dislikerecord
     postlikeachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 3, Userachievements.user_id == current_user.id).all()
     postlikeachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 4, Userachievements.user_id == current_user.id).all()
@@ -47,7 +47,7 @@ def responsepost_achievement():
     if recordcount >= 150:
         if not postlikeachievementsecond:
             postlikeachievement = Userachievements(achievement_id=4, user_id=current_user.id)
-            postlikeachievementpoint = Userpoints(reason='The amount of  clicking "Like" or "Not Interested" reach to 50', points_id=10, user_id=current_user.id)
+            postlikeachievementpoint = Userpoints(reason='The amount of  clicking "Like" or "Not Interested" reach to 150', points_id=10, user_id=current_user.id)
             db.session.add(postlikeachievement)
             db.session.add(postlikeachievementpoint)
     return likerecord, dislikerecord, recordcount, postlikeachievementfirst, postlikeachievementsecond

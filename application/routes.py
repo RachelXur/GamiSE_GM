@@ -49,7 +49,7 @@ def pickWins():
     points = db.session.query(Userpoints.user_id, func.sum(Pointrules.add_points)).outerjoin(Pointrules, Userpoints.points_id == Pointrules.point_id).group_by(Userpoints.user_id).order_by(desc(func.sum(Pointrules.add_points))).all()
     #get top 3s
     for point in points:
-        if rank <= 3:
+        if rank < 3:
             maxP = point[1]
             if tempM != maxP:
                 rank = rank + 1
@@ -251,8 +251,9 @@ def pexperience(token):
 def post(pid):
    post = Post.query.get_or_404(pid)
    likecount = LikePostRecord.query.filter_by(post_id=pid).count()
+   unlikecount = DislikePostRecord.query.filter_by(post_id=pid).count()
 
-   return render_template('user/post.html', post=post, likecount=likecount)
+   return render_template('user/post.html', post=post, likecount=likecount, unlikecount=unlikecount)
 
 
 @app.route('/post/<int:pid>/update', methods=['GET', 'POST'])
@@ -583,10 +584,18 @@ def userreport(token):
                 reportdate = report.report_date.strftime('%Y-%m-%d')
                 if reportdate == str(date.today()):
                     count = count+1
+            # count the number of the reports that submitted by current user that has been deleted and set the limitation
+            deletereports = Deleteuserreport.query.filter_by(user_id=current_user.id)
+            deletecount = 0
+            for report in deletereports:
+                reportdate = report.report_date.strftime('%Y-%m-%d')
+                if reportdate == str(date.today()):
+                    deletecount = deletecount+1
+            counts = deletecount + count
             # submit and store in database userreport
             # if user click NO in the report status. Then have a flash message to remind the user report the attack.
             if form.validate_on_submit():
-                if count < 3:
+                if counts < 3:
                     userreport = Userreport(subject=form.subject.data, reason=form.reason.data, senderemail=form.senderemail.data, riskaction=form.riskaction.data, 
                                             reportstatus=form.reportstatus.data, user=current_user)
                     db.session.add(userreport)
@@ -874,7 +883,20 @@ def itreport():
 def checkuserreport():
     if current_user.position == 'IT':
         reports = Userreport.query.order_by(desc(Userreport.report_date)).all()
-        return render_template('user/check_user_report.html', title='Homepage', reports=reports)
+        return render_template('user/check_user_report.html', title='Check User Report', reports=reports)
+    elif current_user.position == 'Admin':
+        return redirect(url_for('daily'))
+    else:
+        return redirect(url_for('homepage'))
+
+# IT department check user reports (all the report of this user).
+@app.route('/IT/Check_User_Report/<int:pid>', methods=['GET', 'POST'])
+@login_required
+def checkuserallreport(pid):
+    if current_user.position == 'IT':
+        reports = Userreport.query.filter_by(user_id=pid).order_by(desc(Userreport.report_date)).all()
+        print(reports)
+        return render_template('user/check_user_report_thisperson.html', title='Check User Report', reports=reports)
     elif current_user.position == 'Admin':
         return redirect(url_for('daily'))
     else:

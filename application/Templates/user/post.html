@@ -65,15 +65,15 @@
                                             <!-- add like and  interested button here-->
                                             <div class="text-center">
                                                 {% if current_user.liked_post(post.post_id) %}
-                                                    <div>Like: {{ likecount }}</div>
+                                                    <div>Like: {{ likecount }} &nbsp;&nbsp; Not Interested: {{ unlikecount }}</div>
                                                     <div class="button like-b" onclick="like('{{ post.post_id }}', 1)" style="opacity: 0.5;" ><i class="far fa-thumbs-up"></i></div>
                                                     <div class="button unlike-b" onclick="unlike('{{ post.post_id }}', 0)"><i class="far fa-thumbs-down"></i></div>
                                                 {% elif current_user.disliked_post( post.post_id ) %}
-                                                    <div>Like: {{ likecount }}</div>
+                                                    <div>Like: {{ likecount }} &nbsp;&nbsp; Not Interested: {{ unlikecount }}</div>
                                                     <div class="button like-b" onclick="like('{{ post.post_id }}', 0)"><i class="far fa-thumbs-up"></i></div>
                                                     <div class="button unlike-b" onclick="unlike('{{ post.post_id }}', 1)" style="opacity: 0.5;"><i class="far fa-thumbs-down"></i></div>
                                                 {% else %}
-                                                    <div>Like: {{ likecount }}</div>
+                                                    <div>Like: {{ likecount }} &nbsp;&nbsp; Not Interested: {{ unlikecount }}</div>
                                                     <button class="button like-b" onclick="like('{{ post.post_id }}', 0)" type="button"><i class="far fa-thumbs-up"></i></button>
                                                     <button class="button unlike-b" onclick="unlike('{{ post.post_id }}', 0)" type="button"><i class="far fa-thumbs-down"></i></button>
                                                 {% endif %}
