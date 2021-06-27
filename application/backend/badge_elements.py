@@ -41,7 +41,7 @@ def addRecePointsBadge(sum, goal, badgeId, badges):
             badges.append(badge)
 
 
-# Post num
+# Post num 2,3,4,5,6
 def post_badge():
     badges = []
     addPostBadge(1,2,badges)
@@ -53,7 +53,7 @@ def post_badge():
     #print(badges)
     return badges
         
-#  Like/Dislike num
+#  Like/Dislike num 7,8,9,10,11
 def like_badge():
     badges = []
     addReactBadge(1,7,badges)
@@ -66,23 +66,39 @@ def like_badge():
     
     return badges
     
-#  Like received num
-def like_rece_badge():
-    badges = []
-    posts = current_user.posts
-    sum = 0
-    for post in posts:
-        sum += LikePostRecord.query.filter_by(post_id=post.post_id).count()
-    addRecePointsBadge(sum, 10, 12, badges)
-    addRecePointsBadge(sum, 40, 13, badges)
-    addRecePointsBadge(sum, 250, 14, badges)
-    addRecePointsBadge(sum, 400, 15, badges)
-    db.session.commit()
-    
-    return badges
+#  Like received num 12,13,14,15
+def like_rece_badge(pid):
+    post = Post.query.filter_by(post_id=pid).first()
+    belikedposts = db.session.query(Post.user_id, func.count(LikePostRecord.id)).outerjoin(LikePostRecord, Post.post_id == LikePostRecord.post_id).group_by(Post.user_id).filter(Post.user_id == post.user_id).all()
+    #print(belikedposts)
+    if belikedposts[0][1] >= 10:
+        belikedbadgefirst = Userbadges.query.filter(Userbadges.badge_id == 12, Userbadges.user_id == belikedposts[0][0]).all()
+        if not belikedbadgefirst:
+            belikedbadge= Userbadges(badge_id=12, user_id=belikedposts[0][0])
+            db.session.add(belikedbadge)
+            db.session.commit()
+    if belikedposts[0][1] >= 40:
+        belikedbadgesecond = Userbadges.query.filter(Userbadges.badge_id == 13, Userbadges.user_id == belikedposts[0][0]).all()
+        if not belikedbadgesecond:
+            belikedbadge= Userbadges(badge_id=13, user_id=belikedposts[0][0])
+            db.session.add(belikedbadge)
+            db.session.commit()
+    if belikedposts[0][1] >= 250:
+        belikedbadgethird = Userbadges.query.filter(Userbadges.badge_id == 14, Userbadges.user_id == belikedposts[0][0]).all()
+        if not belikedbadgethird:
+            belikedbadge= Userbadges(badge_id=14, user_id=belikedposts[0][0])
+            db.session.add(belikedbadge)
+            db.session.commit()
+    if belikedposts[0][1] >= 400:
+        belikedbadgefourth = Userbadges.query.filter(Userbadges.badge_id == 15, Userbadges.user_id == belikedposts[0][0]).all()
+        if not belikedbadgefourth:
+            belikedbadge= Userbadges(badge_id=15, user_id=belikedposts[0][0])
+            db.session.add(belikedbadge)
+            db.session.commit()
+    return post, belikedposts
 
 
-#  Report badge
+#  Report badge 16
 def report_badge():
     report = Userreport.query.filter_by(user_id=current_user.id).first()
     if report and not checkBadge(16):
@@ -93,7 +109,7 @@ def report_badge():
     else:
         pass
     
-#  Points
+#  Points 17,18,19,20 (current_user)
 def points_badge():
     badges = []
     sum = db.session.query(func.sum(Pointrules.add_points)).join(Userpoints).filter_by(user_id=current_user.id).all()
@@ -105,3 +121,39 @@ def points_badge():
     addRecePointsBadge(sum[0][0], 1390, 20, badges)
     
     return badges
+
+#  Points 17,18,19,20 (not current_user (when current user click like, check point badge of the poster))
+def posterpoints_badge(pid):
+    post = Post.query.filter_by(post_id=pid).first()
+    points = db.session.query(Userpoints.user_id, func.sum(Pointrules.add_points)).outerjoin(Pointrules, Userpoints.points_id == Pointrules.point_id).group_by(Userpoints.user_id).filter(Userpoints.user_id==post.user_id).all()
+    #print(points)
+    if points:
+        if points[0][1] >= 100:
+            #print(points[0][1])
+            pointbadgefirst = Userbadges.query.filter(Userbadges.badge_id == 17, Userbadges.user_id == points[0][0]).all()
+            if not pointbadgefirst:
+                pointbadge = Userbadges(badge_id=17, user_id=points[0][0])
+                db.session.add(pointbadge)
+                db.session.commit()
+        if points[0][1] >= 390:
+            #print(points[0][1])
+            pointbadgefirst = Userbadges.query.filter(Userbadges.badge_id == 18, Userbadges.user_id == points[0][0]).all()
+            if not pointbadgefirst:
+                pointbadge = Userbadges(badge_id=18, user_id=points[0][0])
+                db.session.add(pointbadge)
+                db.session.commit()
+        if points[0][1] >= 930:
+            #print(points[0][1])
+            pointbadgefirst = Userbadges.query.filter(Userbadges.badge_id == 19, Userbadges.user_id == points[0][0]).all()
+            if not pointbadgefirst:
+                pointbadge = Userbadges(badge_id=19, user_id=points[0][0])
+                db.session.add(pointbadge)
+                db.session.commit()
+        if points[0][1] >= 1390:
+            #print(points[0][1])
+            pointbadgefirst = Userbadges.query.filter(Userbadges.badge_id == 20, Userbadges.user_id == points[0][0]).all()
+            if not pointbadgefirst:
+                pointbadge = Userbadges(badge_id=20, user_id=points[0][0])
+                db.session.add(pointbadge)
+                db.session.commit()
+    return post, points

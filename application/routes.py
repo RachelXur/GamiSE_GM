@@ -35,7 +35,7 @@ from application.backend.point_elements import register_point, post_point, likep
 from application.backend.point_elements import deleteuserreport_point
 from application.backend.achievement_elements import register_achievement, post_achievement, responsepost_achievement, belikedpost_achievement
 from application.backend.achievement_elements import point_achievement, report_achievement, beunlikedpost_achievement, posterpoint_achievement, badge_achievement
-from application.backend.badge_elements import register_badge, post_badge, like_badge, like_rece_badge, report_badge, points_badge
+from application.backend.badge_elements import register_badge, post_badge, like_badge, like_rece_badge, report_badge, points_badge, posterpoints_badge
 from application.backend.IT_simulationnote import simulation_note_IT
 from application.backend.User_dailyemail_news_noimage import dailyemailnews_noimage
 from application.backend.IT_dailyemail_news_noimage import dailyemailnews_IT_noimage
@@ -237,6 +237,9 @@ def pexperience(token):
             if current_user.position == 'Normal':
                 post_point()
                 post_achievement()
+                post_badge()
+                points_badge()
+                badge_achievement()
                 point_achievement()
             now = newPost.post_date
             flash(f"Posted {now.strftime('%Y-%m-%d %H:%M')}", 'success')
@@ -325,9 +328,14 @@ def like(pid):
         db.session.commit()
         if current_user.position == 'Normal':
             likepost_point(pid)
+            like_badge()
             responsepost_achievement()
             belikedpost_achievement(pid)
             posterpoint_achievement(pid)
+            posterpoints_badge(pid)
+            like_rece_badge(pid)
+            points_badge()
+            badge_achievement()
             point_achievement()
         return 'success', 200
     else:
@@ -352,9 +360,13 @@ def unlike(pid):
         db.session.commit()
         if current_user.position == 'Normal':
             unlikepost_point(pid)
+            like_badge()
             responsepost_achievement()
             beunlikedpost_achievement(pid)
             posterpoint_achievement(pid)
+            posterpoints_badge(pid)
+            points_badge()
+            badge_achievement()
             point_achievement()
         return 'success', 200
     else:
@@ -601,6 +613,9 @@ def userreport(token):
                     db.session.add(userreport)
                     db.session.commit()
                     report_point()
+                    report_badge()
+                    points_badge()
+                    badge_achievement()
                     point_achievement()
                     now = userreport.report_date
                     if form.reportstatus.data == "No":
@@ -626,10 +641,6 @@ def userreport(token):
 @login_required
 def paccount():
     if current_user.position != 'Admin':
-        post_badge()
-        like_badge()
-        like_rece_badge()
-        report_badge()
         points_badge()
         badge_achievement()
         point_achievement()
@@ -644,10 +655,6 @@ def paccount():
 @login_required
 def achieveaccount():
     if current_user.position != 'Admin':
-        post_badge()
-        like_badge()
-        like_rece_badge()
-        report_badge()
         points_badge()
         badge_achievement()
         point_achievement()
@@ -662,10 +669,6 @@ def achieveaccount():
 @login_required
 def badgeaccount():
     if current_user.position != 'Admin':
-        post_badge()
-        like_badge()
-        like_rece_badge()
-        report_badge()
         points_badge()
         badge_achievement()
         point_achievement()
@@ -691,10 +694,6 @@ def rewardaccount():
 @login_required
 def leaderboard():
     if current_user.position != 'Admin':
-        post_badge()
-        like_badge()
-        like_rece_badge()
-        report_badge()
         points_badge()
         badge_achievement()
         point_achievement()
