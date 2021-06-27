@@ -34,7 +34,7 @@ from application.newsapi.T_News_Twitter import Twitternews
 from application.backend.point_elements import register_point, post_point, likepost_point, deletelikepost_point, unlikepost_point, deleteunlikepost_point, report_point
 from application.backend.point_elements import deleteuserreport_point
 from application.backend.achievement_elements import register_achievement, post_achievement, responsepost_achievement, belikedpost_achievement
-from application.backend.achievement_elements import point_achievement, report_achievement, beunlikedpost_achievement, posterpoint_achievement
+from application.backend.achievement_elements import point_achievement, report_achievement, beunlikedpost_achievement, posterpoint_achievement, badge_achievement
 from application.backend.badge_elements import register_badge, post_badge, like_badge, like_rece_badge, report_badge, points_badge
 from application.backend.IT_simulationnote import simulation_note_IT
 from application.backend.User_dailyemail_news_noimage import dailyemailnews_noimage
@@ -326,9 +326,9 @@ def like(pid):
         if current_user.position == 'Normal':
             likepost_point(pid)
             responsepost_achievement()
-            point_achievement()
             belikedpost_achievement(pid)
             posterpoint_achievement(pid)
+            point_achievement()
         return 'success', 200
     else:
         # delete like record
@@ -353,9 +353,9 @@ def unlike(pid):
         if current_user.position == 'Normal':
             unlikepost_point(pid)
             responsepost_achievement()
-            point_achievement()
             beunlikedpost_achievement(pid)
             posterpoint_achievement(pid)
+            point_achievement()
         return 'success', 200
     else:
         # delete dislike record
@@ -626,6 +626,12 @@ def userreport(token):
 @login_required
 def paccount():
     if current_user.position != 'Admin':
+        post_badge()
+        like_badge()
+        like_rece_badge()
+        report_badge()
+        points_badge()
+        badge_achievement()
         point_achievement()
         pointsrecord = Userpoints.query.filter(Userpoints.user_id==current_user.id).order_by(desc(Userpoints.points_date)).all()
         return render_template("user/points_account.html", pointsrecord=pointsrecord)
@@ -638,6 +644,12 @@ def paccount():
 @login_required
 def achieveaccount():
     if current_user.position != 'Admin':
+        post_badge()
+        like_badge()
+        like_rece_badge()
+        report_badge()
+        points_badge()
+        badge_achievement()
         point_achievement()
         achievementsrecord = db.session.query(Userachievements.achievement_date, Achievementrules.name, Achievementrules.description, Achievementrules.add_points).outerjoin(Achievementrules, Userachievements.achievement_id == Achievementrules.achievement_id).order_by(desc(Userachievements.achievement_date)).filter(Userachievements.user_id == current_user.id).all()
         return render_template("user/achievements_account.html", achievementsrecord=achievementsrecord)
@@ -650,12 +662,13 @@ def achieveaccount():
 @login_required
 def badgeaccount():
     if current_user.position != 'Admin':
-        point_achievement()
         post_badge()
         like_badge()
         like_rece_badge()
         report_badge()
         points_badge()
+        badge_achievement()
+        point_achievement()
         badgesrecord = db.session.query(Userbadges.badge_date, Badgerules.name, Badgerules.description, Badgerules.image_file).outerjoin(Badgerules, Badgerules.badge_id == Userbadges.badge_id).order_by(desc(Userbadges.badge_date)).filter(Userbadges.user_id == current_user.id).all()
         return render_template("user/badges_account.html", badgesrecord=badgesrecord)
     else:
@@ -667,7 +680,6 @@ def badgeaccount():
 @login_required
 def rewardaccount():
     if current_user.position != 'Admin':
-        point_achievement()
         rewardsrecord = db.session.query(Userrewards.reward_date, Rewardrules.name, Rewardrules.description, Rewardrules.image_file).outerjoin(Rewardrules, Rewardrules.reward_id == Userrewards.reward_id).order_by(desc(Userrewards.reward_date)).filter(Userrewards.user_id == current_user.id).all()
         return render_template("user/rewards_account.html", rewardsrecord=rewardsrecord)
     else:
@@ -679,6 +691,13 @@ def rewardaccount():
 @login_required
 def leaderboard():
     if current_user.position != 'Admin':
+        post_badge()
+        like_badge()
+        like_rece_badge()
+        report_badge()
+        points_badge()
+        badge_achievement()
+        point_achievement()
         pointlist = []
         rank = 0
         total = 0
@@ -702,10 +721,10 @@ def leaderboard():
 @login_required
 def user_gamification():
     if current_user.position != 'Admin':
-        pointrules = Pointrules.query.all()
-        achievementrules = Achievementrules.query.all()
-        badgerules = Badgerules.query.all()
-        rewardrules = Rewardrules.query.all()
+        pointrules = Pointrules.query.order_by(asc(Pointrules.point_id)).all()
+        achievementrules = Achievementrules.query.order_by(asc(Achievementrules.achievement_id)).all()
+        badgerules = Badgerules.query.order_by(asc(Badgerules.badge_id)).all()
+        rewardrules = Rewardrules.query.order_by(asc(Rewardrules.reward_id)).all()
         return render_template('user/user_gamification.html', pointrules=pointrules, achievementrules=achievementrules, badgerules=badgerules, rewardrules=rewardrules)
     else:
         return redirect(url_for('daily'))

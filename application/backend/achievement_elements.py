@@ -37,10 +37,10 @@ def responsepost_achievement():
     recordcount = likerecord + dislikerecord
     postlikeachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 3, Userachievements.user_id == current_user.id).all()
     postlikeachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 4, Userachievements.user_id == current_user.id).all()
-    if recordcount >= 50:
+    if recordcount >= 20:
         if not postlikeachievementfirst:
             postlikeachievement = Userachievements(achievement_id=3, user_id=current_user.id)
-            postlikeachievementpoint = Userpoints(reason='The amount of  clicking "Like" or "Not Interested" reach to 50', points_id=9, user_id=current_user.id)
+            postlikeachievementpoint = Userpoints(reason='The amount of  clicking "Like" or "Not Interested" reach to 20', points_id=9, user_id=current_user.id)
             db.session.add(postlikeachievement)
             db.session.add(postlikeachievementpoint)
             db.session.commit()
@@ -58,11 +58,11 @@ def belikedpost_achievement(pid):
     post = Post.query.filter_by(post_id=pid).first()
     belikedposts = db.session.query(Post.user_id, func.count(LikePostRecord.id)).outerjoin(LikePostRecord, Post.post_id == LikePostRecord.post_id).group_by(Post.user_id).filter(Post.user_id == post.user_id).all()
     #print(belikedposts)
-    if belikedposts[0][1] >= 50:
+    if belikedposts[0][1] >= 20:
         belikedachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 5, Userachievements.user_id == belikedposts[0][0]).all()
         if not belikedachievementfirst:
             belikedachievement = Userachievements(achievement_id=5, user_id=belikedposts[0][0])
-            belikedpoint = Userpoints(reason='The amount of "Like" reach to 50', points_id=11, user_id=belikedposts[0][0])
+            belikedpoint = Userpoints(reason='The amount of "Like" reach to 20', points_id=11, user_id=belikedposts[0][0])
             db.session.add(belikedachievement)
             db.session.add(belikedpoint)
             db.session.commit()
@@ -81,27 +81,27 @@ def beunlikedpost_achievement(pid):
     post = Post.query.filter_by(post_id=pid).first()
     beunlikedposts = db.session.query(Post.user_id, func.count(DislikePostRecord.id)).outerjoin(DislikePostRecord, Post.post_id == DislikePostRecord.post_id).group_by(Post.user_id).filter(Post.user_id == post.user_id).all()
     #print(beunlikedposts)
-    if beunlikedposts[0][1] >= 50:
+    if beunlikedposts[0][1] >= 20:
         beunlikedachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 7, Userachievements.user_id == beunlikedposts[0][0]).all()
         if not beunlikedachievementfirst:
             beunlikedachievement = Userachievements(achievement_id=7, user_id=beunlikedposts[0][0])
-            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 50', points_id=13, user_id=beunlikedposts[0][0])
+            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 20', points_id=13, user_id=beunlikedposts[0][0])
             db.session.add(beunlikedachievement)
             db.session.add(beunlikedpoint)
             db.session.commit()
-    if beunlikedposts[0][1] >= 150:
+    if beunlikedposts[0][1] >= 40:
         beunlikedachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 8, Userachievements.user_id == beunlikedposts[0][0]).all()
         if not beunlikedachievementsecond:
             beunlikedachievement = Userachievements(achievement_id=8, user_id=beunlikedposts[0][0])
-            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 150', points_id=14, user_id=beunlikedposts[0][0])
+            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 40', points_id=14, user_id=beunlikedposts[0][0])
             db.session.add(beunlikedachievement)
             db.session.add(beunlikedpoint)
             db.session.commit()
-    if beunlikedposts[0][1] >= 250:
+    if beunlikedposts[0][1] >= 200:
         beunlikedachievementthird = Userachievements.query.filter(Userachievements.achievement_id == 9, Userachievements.user_id == beunlikedposts[0][0]).all()
         if not beunlikedachievementthird:
             beunlikedachievement = Userachievements(achievement_id=9, user_id=beunlikedposts[0][0])
-            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 250', points_id=15, user_id=beunlikedposts[0][0])
+            beunlikedpoint = Userpoints(reason='The amount of "Not Interested" reach to 200', points_id=15, user_id=beunlikedposts[0][0])
             db.session.add(beunlikedachievement)
             db.session.add(beunlikedpoint)
             db.session.commit()
@@ -121,22 +121,22 @@ def posterpoint_achievement(pid):
     points = db.session.query(Userpoints.user_id, func.sum(Pointrules.add_points)).outerjoin(Pointrules, Userpoints.points_id == Pointrules.point_id).group_by(Userpoints.user_id).filter(Userpoints.user_id==post.user_id).all()
     #print(points)
     if points:
-        if points[0][1] >= 320:
+        if points[0][1] >= 220:
             #print(points[0][1])
             pointachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 11, Userachievements.user_id == points[0][0]).all()
             #print(pointachievementfirst)
             if not pointachievementfirst:
                 pointachievement = Userachievements(achievement_id=11, user_id=points[0][0])
-                pointpoint = Userpoints(reason='The points reach to 320', points_id=17, user_id=points[0][0])
+                pointpoint = Userpoints(reason='The points reach to 220', points_id=17, user_id=points[0][0])
                 db.session.add(pointachievement)
                 db.session.add(pointpoint)
                 db.session.commit()
-        if points[0][1] >= 640:
+        if points[0][1] >= 540:
             #print(points[0][1])
             pointachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 12, Userachievements.user_id == points[0][0]).all()
             if not pointachievementsecond:
                 pointachievement = Userachievements(achievement_id=12, user_id=points[0][0])
-                pointpoint = Userpoints(reason='The points reach to 640', points_id=18, user_id=points[0][0])
+                pointpoint = Userpoints(reason='The points reach to 540', points_id=18, user_id=points[0][0])
                 db.session.add(pointachievement)
                 db.session.add(pointpoint)
                 db.session.commit()
@@ -147,22 +147,22 @@ def point_achievement():
     points = db.session.query(Userpoints.user_id, func.sum(Pointrules.add_points)).outerjoin(Pointrules, Userpoints.points_id == Pointrules.point_id).group_by(Userpoints.user_id).filter(Userpoints.user_id==current_user.id).all()
     #print(points)
     if points:
-        if points[0][1] >= 320:
+        if points[0][1] >= 220:
             #print(points[0][1])
             pointachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 11, Userachievements.user_id == points[0][0]).all()
             #print(pointachievementfirst)
             if not pointachievementfirst:
                 pointachievement = Userachievements(achievement_id=11, user_id=points[0][0])
-                pointpoint = Userpoints(reason='The points reach to 320', points_id=17, user_id=points[0][0])
+                pointpoint = Userpoints(reason='The points reach to 220', points_id=17, user_id=points[0][0])
                 db.session.add(pointachievement)
                 db.session.add(pointpoint)
                 db.session.commit()
-        if points[0][1] >= 640:
+        if points[0][1] >= 540:
             #print(points[0][1])
             pointachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 12, Userachievements.user_id == points[0][0]).all()
             if not pointachievementsecond:
                 pointachievement = Userachievements(achievement_id=12, user_id=points[0][0])
-                pointpoint = Userpoints(reason='The points reach to 640', points_id=18, user_id=points[0][0])
+                pointpoint = Userpoints(reason='The points reach to 540', points_id=18, user_id=points[0][0])
                 db.session.add(pointachievement)
                 db.session.add(pointpoint)
                 db.session.commit()
@@ -183,3 +183,32 @@ def report_achievement(pid):
             db.session.add(reportpoint)
             db.session.commit()
     return report, reportachievementfirst
+
+# badge amount achievement - 14,15,16
+def badge_achievement():
+    badgecount = Userbadges.query.filter_by(user_id=current_user.id).count()
+    if badgecount >=5:
+        badgeachievementfirst = Userachievements.query.filter(Userachievements.achievement_id == 14, Userachievements.user_id == current_user.id).all()
+        if not badgeachievementfirst:
+            badgeachievement = Userachievements(achievement_id=14, user_id=current_user.id)
+            badgepoint = Userpoints(reason='Get 5 badges', points_id=20, user_id=current_user.id)
+            db.session.add(badgeachievement)
+            db.session.add(badgepoint)
+            db.session.commit()
+    if badgecount >=10:
+        badgeachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 15, Userachievements.user_id == current_user.id).all()
+        if not badgeachievementsecond:
+            badgeachievement = Userachievements(achievement_id=15, user_id=current_user.id)
+            badgepoint = Userpoints(reason='Get 10 badges', points_id=21, user_id=current_user.id)
+            db.session.add(badgeachievement)
+            db.session.add(badgepoint)
+            db.session.commit()
+    if badgecount >=20:
+        badgeachievementsecond = Userachievements.query.filter(Userachievements.achievement_id == 16, Userachievements.user_id == current_user.id).all()
+        if not badgeachievementsecond:
+            badgeachievement = Userachievements(achievement_id=16, user_id=current_user.id)
+            badgepoint = Userpoints(reason='Get 20 badges', points_id=22, user_id=current_user.id)
+            db.session.add(badgeachievement)
+            db.session.add(badgepoint)
+            db.session.commit()
+    return badgecount

@@ -45,10 +45,10 @@ def addRecePointsBadge(sum, goal, badgeId, badges):
 def post_badge():
     badges = []
     addPostBadge(1,2,badges)
-    addPostBadge(5,3,badges)
-    addPostBadge(15,4,badges)
-    addPostBadge(20,5,badges)
-    addPostBadge(40,6,badges)
+    addPostBadge(3,3,badges)
+    addPostBadge(5,4,badges)
+    addPostBadge(7,5,badges)
+    addPostBadge(20,6,badges)
     db.session.commit()
     #print(badges)
     return badges
@@ -57,8 +57,8 @@ def post_badge():
 def like_badge():
     badges = []
     addReactBadge(1,7,badges)
-    addReactBadge(15,8,badges)
-    addReactBadge(100,9,badges)
+    addReactBadge(10,8,badges)
+    addReactBadge(40,9,badges)
     addReactBadge(250,10,badges)
     addReactBadge(400,11,badges)
     db.session.commit()
@@ -73,8 +73,8 @@ def like_rece_badge():
     sum = 0
     for post in posts:
         sum += LikePostRecord.query.filter_by(post_id=post.post_id).count()
-    addRecePointsBadge(sum, 20, 12, badges)
-    addRecePointsBadge(sum, 100, 13, badges)
+    addRecePointsBadge(sum, 10, 12, badges)
+    addRecePointsBadge(sum, 40, 13, badges)
     addRecePointsBadge(sum, 250, 14, badges)
     addRecePointsBadge(sum, 400, 15, badges)
     db.session.commit()
@@ -99,9 +99,9 @@ def points_badge():
     sum = db.session.query(func.sum(Pointrules.add_points)).join(Userpoints).filter_by(user_id=current_user.id).all()
     #print(sum[0][0], file=sys.stdout)
     
-    addRecePointsBadge(sum[0][0], 200, 17, badges)
-    addRecePointsBadge(sum[0][0], 400, 18, badges)
-    addRecePointsBadge(sum[0][0], 900, 19, badges)
-    addRecePointsBadge(sum[0][0], 1240, 20, badges)
+    addRecePointsBadge(sum[0][0], 100, 17, badges)
+    addRecePointsBadge(sum[0][0], 390, 18, badges)
+    addRecePointsBadge(sum[0][0], 930, 19, badges)
+    addRecePointsBadge(sum[0][0], 1390, 20, badges)
     
     return badges
