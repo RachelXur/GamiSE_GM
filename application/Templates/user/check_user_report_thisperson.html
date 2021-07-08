@@ -39,19 +39,23 @@
                                                                 <div id="que-hedder2983">
                                                                     <a href="{{url_for('check_report', pid=report.report_id)}}"><h3><strong>{{ report.subject }}</strong></h3></a>
                                                                 </div>
-                                                                <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap; word-wrap: break-word;">
                                                                     <h4><strong>Sender Email:</strong></h4>
                                                                     <p>{{ report.senderemail }}</p>
                                                                 </div>
                                                                 <div class="detailstext">
-                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap; word-wrap: break-word;">
                                                                         <h4><strong>Phishing Elements:</strong></h4>
                                                                         <p>{{ report.reason }}</p>
                                                                     </div>
-                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap;">
+                                                                </div>
+                                                                <div class="detailstext">
+                                                                    <div class="ques-details10018" style="font-size:18px; white-space: pre-wrap; word-wrap: break-word;">
                                                                         <h4><strong>Risk Action:</strong></h4>
                                                                         <p>{{ report.riskaction }}</p>
                                                                     </div>
+                                                                </div>
+                                                                <div class="detailstext">
                                                                     <div class="ques-details10018" style="font-size:18px">
                                                                         <h4><strong>Report Status:</strong></h4>
                                                                         <p>{{ report.reportstatus }}</p>

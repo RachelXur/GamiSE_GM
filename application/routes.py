@@ -739,6 +739,16 @@ def epsharing():
     else:
         return redirect(url_for('daily'))
 
+@app.route('/user/posterexperience_sharing/<int:pid>', methods=['GET', 'POST'])
+@login_required
+def posterepsharing(pid):
+    if current_user.position != 'Admin':
+        postnum = Post.query.filter_by(user_id=pid).count()
+        posts = Post.query.filter_by(user_id=pid).order_by(desc(Post.post_date)).all()
+        return render_template("user/posterexperience_sharing.html", posts=posts, postnum=postnum)
+    else:
+        return redirect(url_for('daily'))
+
 
 # If User want to withdrawal, they can click the link in daily email to go to this route.
 @app.route('/user/withdrawal/<token>', methods=['GET', 'POST'])
