@@ -339,3 +339,14 @@ class Emailchangerecord(db.Model):
 
     def __repr__(self):
         return f"Emailchangerecord('{self.record_id}', '{self.record_date}', '{self.before}', '{self.after}')"
+
+
+class TotalPoints(db.Model):
+    totalpoint_id = db.Column(db.Integer, primary_key=True)
+    user = db.Column(db.String(20), nullable=False)
+    rank = db.Column(db.Integer, nullable=True)
+    points = db.Column(db.Integer, nullable=True)
+    date = db.Column(db.DateTime, nullable=False, default=datetime.now)
+
+    def __repr__(self):
+        return f"TotalPoints('{self.totalpoint_id}', '{self.user}', '{self.rank}', '{self.points}')"

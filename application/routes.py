@@ -6,7 +6,7 @@ from application.forms import UserReportForm, ITReportForm, ITCheckForm, Simulat
 from application.newsapi.news import NewsofCA
 from application.newsapi.newsinterests import NewsofInterest
 from application.model import User, Post, Userreport, Itreport, Ituser, Phishingcampaign, Phishingresult, LikePostRecord, DislikePostRecord, Withdrawal, Photo, Emailchangerecord
-from application.model import Pointrules, Achievementrules, Badgerules, Rewardrules, Userpoints, Userachievements, Userbadges, Userrewards, Phishinglinkrecord, Deleteuserreport
+from application.model import Pointrules, Achievementrules, Badgerules, Rewardrules, Userpoints, Userachievements, Userbadges, Userrewards, Phishinglinkrecord, Deleteuserreport, TotalPoints
 from flask_login import login_user, current_user, logout_user, login_required
 import secrets, sys, os
 from PIL import Image
@@ -63,6 +63,23 @@ def pickWins():
         rewardR = Userrewards(reward_date=datetime.now(), reward_id=user[0], user_id=user[1])
         db.session.add(rewardR)
     db.session.commit()
+    pointlist = []
+    rank = 0
+    total = 0
+    points = db.session.query(Userpoints.user_id, func.sum(Pointrules.add_points)).outerjoin(Pointrules, Userpoints.points_id == Pointrules.point_id).group_by(Userpoints.user_id).order_by(desc(func.sum(Pointrules.add_points))).all()
+    #print(points)
+    for point in points:
+        name = User.query.filter_by(id=point[0]).first()
+        totalpoint = point[1]
+        if total != totalpoint:
+            rank = rank + 1
+            total = totalpoint
+        pointlist.append([rank, name.username, totalpoint])
+    for saveuser in pointlist:
+        saverank = TotalPoints(user=saveuser[1], rank=saveuser[0], points=saveuser[2])
+        db.session.add(saverank)
+    db.session.commit()
+
 
 
 @app.route('/', methods=['GET', 'POST'])
