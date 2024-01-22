@@ -1,0 +1,3 @@
+Summary
+GamiSE is a gamified social engineering platform that merges modern gamification principles with social engineering training. Designed to be a motivating and enjoyable platform that enhances users' awareness and defense capabilities against social engineering (SE) attacks. Users can share SE-related experiences and information, fostering interaction through responses to other users' posts. 
+GamiSE conducts phishing simulations with customized templates, allowing users to report SE attacks directly on the platform. As users engage in these activities, they earn points, achievements, badges, and rewards, providing positive reinforcement for their participation and performance in the training process.
